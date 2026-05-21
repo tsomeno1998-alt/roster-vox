@@ -31,6 +31,11 @@ export async function proxy(request: NextRequest) {
     rest === '/verify-email' ||
     rest.startsWith('/auth/');
 
+  // Auth callbackはi18nリダイレクトをスキップ（ロケールプレフィックスなしで直接処理）
+  if (pathname.startsWith('/auth/')) {
+    return NextResponse.next({ request });
+  }
+
   // i18nミドルウェアを実行（ロケールリダイレクトの場合はそのまま返す）
   const i18nResult = handleI18n(request);
   if (i18nResult.status === 307 || i18nResult.status === 308) {
