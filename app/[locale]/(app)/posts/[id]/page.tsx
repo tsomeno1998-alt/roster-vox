@@ -2,11 +2,12 @@ import { getTranslations, getLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { Link } from '@/i18n/navigation';
 import { getPost, getComments, getUsedReports } from '@/lib/queries/posts';
-import { getCurrentUser, getFactions } from '@/lib/queries/profiles';
+import { getCurrentUser, getFactions, isFollowing } from '@/lib/queries/profiles';
 import { createClient } from '@/lib/supabase/server';
 import Avatar from '@/components/ui/Avatar';
 import FactionBadge from '@/components/post/FactionBadge';
 import LikeButton from '@/components/post/LikeButton';
+import FollowButton from '@/components/profile/FollowButton';
 import CommentForm from '@/components/post/CommentForm';
 import UsedReportForm from '@/components/post/UsedReportForm';
 import RosterText from '@/components/post/RosterText';
@@ -52,6 +53,10 @@ export default async function PostDetailPage({ params }: Props) {
   const profile = post.profiles as { id: string; username: string; display_name: string; avatar_url: string | null };
   const faction = post.factions as { id: string; name: string; group: string };
 
+  const initialFollowing = !isOwner && user
+    ? await isFollowing(user.id, profile.id)
+    : false;
+
   return (
     <div className="flex flex-col min-h-full">
       <header className="bg-surface border-b border-bd px-4 pt-12 pb-3 sticky top-0 z-10 flex items-center gap-3">
@@ -73,10 +78,13 @@ export default async function PostDetailPage({ params }: Props) {
             <Link href={`/profile/${profile.username}`}>
               <p className="font-semibold text-tx hover:text-primary transition-colors">{profile.display_name}</p>
             </Link>
-            <p className="text-xs text-tx-muted">@{profile.username} · {timeAgo(post.created_at, locale)}</p>
+            <p className="text-xs text-tx-muted">{timeAgo(post.created_at, locale)}</p>
           </div>
           <FactionBadge name={faction.name} group={faction.group as FactionGroup} />
         </div>
+        {!isOwner && user && (
+          <FollowButton targetUserId={profile.id} initialFollowing={initialFollowing} />
+        )}
 
         <div>
           <h2 className="text-xl font-bold text-tx mb-2">{post.title}</h2>

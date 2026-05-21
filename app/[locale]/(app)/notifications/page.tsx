@@ -2,7 +2,8 @@ import { getTranslations, getLocale } from 'next-intl/server';
 import { redirect } from '@/i18n/navigation';
 import { Link } from '@/i18n/navigation';
 import { getCurrentUser, getNotifications, type NotificationWithActor } from '@/lib/queries/profiles';
-import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/admin';
+import { revalidatePath } from 'next/cache';
 import Avatar from '@/components/ui/Avatar';
 import { timeAgo } from '@/lib/timeAgo';
 
@@ -17,13 +18,14 @@ export default async function NotificationsPage() {
   ]);
 
   if ((notifications as NotificationWithActor[]).some((n) => !n.read)) {
-    const supabase = await createClient();
+    const admin = createAdminClient();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    await (supabase as any)
+    await (admin as any)
       .from('notifications')
       .update({ read: true })
       .eq('user_id', user.id)
       .eq('read', false);
+    revalidatePath('/[locale]/(app)', 'layout');
   }
 
   const typeKey = {
