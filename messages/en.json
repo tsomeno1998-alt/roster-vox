@@ -52,7 +52,18 @@
     "collapseRoster": "Collapse ▲",
     "likeCount": "{count} likes",
     "commentCount": "{count} comments",
-    "usedCount": "{count} field reports"
+    "usedCount": "{count} field reports",
+    "usedReportButton": "Post a Field Report",
+    "usedReportTitle": "Field Report",
+    "usedReportResultLabel": "Result (optional)",
+    "usedReportWin": "Win",
+    "usedReportLoss": "Loss",
+    "usedReportDraw": "Draw",
+    "usedReportOpponentLabel": "Opponent Army (optional)",
+    "usedReportOpponentNone": "Not selected",
+    "usedReportNotesLabel": "Notes (optional)",
+    "usedReportNotesPlaceholder": "Share your experience...",
+    "usedReportSubmit": "Submit Report"
   },
   "postCard": {
     "record": "{w}W {l}L {d}D"

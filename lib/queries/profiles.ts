@@ -22,13 +22,27 @@ export async function getCurrentProfile(): Promise<ProfileRow | null> {
   if (!user) return null;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data } = await (supabase as any)
+  const sb = supabase as any;
+  const { data } = await sb.from('profiles').select('*').eq('id', user.id).single();
+  if (data) return data as ProfileRow;
+
+  // トリガーが未実行の場合にフォールバックとして作成
+  const emailPrefix = (user.email ?? 'user').split('@')[0].replace(/[^a-zA-Z0-9_]/g, '').toLowerCase() || 'user';
+  const suffix = user.id.replace(/-/g, '').slice(0, 6);
+  const username = `${emailPrefix}_${suffix}`;
+  const display_name =
+    user.user_metadata?.full_name ??
+    user.user_metadata?.name ??
+    username;
+  const avatar_url = user.user_metadata?.avatar_url ?? null;
+
+  const { data: created } = await sb
     .from('profiles')
+    .upsert({ id: user.id, username, display_name, avatar_url }, { onConflict: 'id' })
     .select('*')
-    .eq('id', user.id)
     .single();
 
-  return (data ?? null) as ProfileRow | null;
+  return (created ?? null) as ProfileRow | null;
 }
 
 export async function getProfileByUsername(username: string): Promise<ProfileRow | null> {

@@ -52,7 +52,18 @@
     "collapseRoster": "折りたたむ ▲",
     "likeCount": "{count} いいね",
     "commentCount": "{count} コメント",
-    "usedCount": "{count} 使ってみた"
+    "usedCount": "{count} 使ってみた",
+    "usedReportButton": "使ってみた報告を投稿",
+    "usedReportTitle": "使ってみた報告",
+    "usedReportResultLabel": "対戦結果（任意）",
+    "usedReportWin": "勝ち",
+    "usedReportLoss": "負け",
+    "usedReportDraw": "引き分け",
+    "usedReportOpponentLabel": "相手アーミー（任意）",
+    "usedReportOpponentNone": "選択しない",
+    "usedReportNotesLabel": "感想（任意）",
+    "usedReportNotesPlaceholder": "使ってみた感想を書いてください",
+    "usedReportSubmit": "報告を投稿"
   },
   "postCard": {
     "record": "{w}勝 {l}敗 {d}分"
