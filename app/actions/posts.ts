@@ -22,20 +22,30 @@ export async function createPost(formData: FormData) {
   const faction_id = formData.get('faction_id') as string;
   const points = parseInt(formData.get('points') as string);
   const title = (formData.get('title') as string).trim();
-  const concept = (formData.get('concept') as string)?.trim() || null;
   const roster_text = (formData.get('roster_text') as string).trim();
   const photo_url = (formData.get('photo_url') as string)?.trim() || null;
+  const comment_body = (formData.get('comment_body') as string)?.trim() || null;
 
   if (!faction_id || !points || !title || !roster_text) return;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data, error } = await (supabase as any)
+  const sb = supabase as any;
+  const { data, error } = await sb
     .from('posts')
-    .insert({ user_id: user.id, faction_id, points, title, concept, roster_text, photo_url })
+    .insert({ user_id: user.id, faction_id, points, title, roster_text, photo_url })
     .select('id')
     .single();
 
   if (error) { console.error('createPost:', error); return; }
+
+  if (comment_body) {
+    await sb.from('comments').insert({
+      post_id: data.id,
+      user_id: user.id,
+      type: 'comment',
+      body: comment_body,
+    });
+  }
 
   revalidateTimeline();
   await redirect(`/posts/${data.id}`);

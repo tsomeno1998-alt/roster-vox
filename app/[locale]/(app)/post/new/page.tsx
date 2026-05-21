@@ -84,6 +84,16 @@ export default async function NewPostPage() {
         </div>
 
         <div>
+          <label className="block text-sm font-medium text-tx mb-1.5">{tp('concept')}</label>
+          <textarea
+            name="comment_body"
+            rows={3}
+            placeholder={tp('conceptPlaceholder')}
+            className="w-full px-3 py-2.5 rounded-xl border border-bd bg-surface text-sm text-tx placeholder:text-tx-light focus:outline-none focus:border-primary resize-none"
+          />
+        </div>
+
+        <div>
           <label className="block text-sm font-medium text-tx mb-1.5">{tp('photoLabel')}</label>
           <PhotoPicker userId={user.id} label={tp('photoPickerLabel')} hint={tp('photoPickerHint')} />
         </div>
