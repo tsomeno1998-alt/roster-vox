@@ -25,7 +25,6 @@ export default function PostCard({ post, locale }: PostCardProps) {
           <Avatar src={author.avatar_url} username={author.display_name} size="sm" />
           <div className="flex-1 min-w-0">
             <p className="text-sm font-medium text-tx truncate">{author.display_name}</p>
-            <p className="text-xs text-tx-light">@{author.username}</p>
           </div>
           <FactionBadge name={faction.name} group={faction.group} />
           <span className="text-xs text-tx-light whitespace-nowrap">
