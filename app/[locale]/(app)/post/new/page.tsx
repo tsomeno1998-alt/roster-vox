@@ -79,18 +79,7 @@ export default async function NewPostPage() {
             type="text"
             name="title"
             required
-            placeholder={tp('titlePlaceholder')}
-            className="w-full px-3 py-2.5 rounded-xl border border-bd bg-surface text-sm text-tx placeholder:text-tx-light focus:outline-none focus:border-primary"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-tx mb-1.5">{tp('concept')}</label>
-          <textarea
-            name="concept"
-            rows={4}
-            placeholder={tp('conceptPlaceholder')}
-            className="w-full px-3 py-2.5 rounded-xl border border-bd bg-surface text-sm text-tx placeholder:text-tx-light focus:outline-none focus:border-primary resize-none"
+            className="w-full px-3 py-2.5 rounded-xl border border-bd bg-surface text-sm text-tx focus:outline-none focus:border-primary"
           />
         </div>
 

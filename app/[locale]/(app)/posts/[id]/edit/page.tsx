@@ -85,18 +85,9 @@ export default async function EditPostPage({ params }: Props) {
           <input
             type="text"
             name="title"
+            required
             defaultValue={post.title}
             className="w-full px-3 py-2.5 rounded-xl border border-bd bg-surface text-sm text-tx focus:outline-none focus:border-primary"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-tx mb-1.5">{tp('concept')}</label>
-          <textarea
-            name="concept"
-            rows={4}
-            defaultValue={post.concept ?? ''}
-            className="w-full px-3 py-2.5 rounded-xl border border-bd bg-surface text-sm text-tx focus:outline-none focus:border-primary resize-none"
           />
         </div>
 
