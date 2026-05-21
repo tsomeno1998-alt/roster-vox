@@ -20,6 +20,7 @@ export default function SearchForm({ factions }: SearchFormProps) {
   const currentQ = searchParams.get('q') ?? '';
   const currentFaction = searchParams.get('faction') ?? '';
   const currentPoints = searchParams.get('points') ?? '';
+  const currentPeriod = searchParams.get('period') ?? '';
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -72,6 +73,16 @@ export default function SearchForm({ factions }: SearchFormProps) {
         >
           <option value="">{t('allPoints')}</option>
           {POINT_OPTIONS.map((pt) => <option key={pt} value={String(pt)}>{pt}pt</option>)}
+        </select>
+        <select
+          value={currentPeriod}
+          onChange={(e) => updateFilter('period', e.target.value)}
+          className="text-xs px-2 py-1.5 rounded-full border border-bd text-tx-muted bg-surface focus:outline-none focus:border-primary"
+        >
+          <option value="">{t('allPeriods')}</option>
+          <option value="7d">{t('period7d')}</option>
+          <option value="30d">{t('period30d')}</option>
+          <option value="90d">{t('period90d')}</option>
         </select>
       </div>
     </div>

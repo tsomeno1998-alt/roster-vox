@@ -79,7 +79,11 @@
     "noResultsHint": "Try a different keyword",
     "resultsCount": "{count} results",
     "allArmies": "All Armies",
-    "allPoints": "All Points"
+    "allPoints": "All Points",
+    "allPeriods": "All time",
+    "period7d": "1 week",
+    "period30d": "1 month",
+    "period90d": "3 months"
   },
   "notifications": {
     "title": "Notifications",

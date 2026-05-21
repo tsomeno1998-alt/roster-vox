@@ -6,11 +6,11 @@ import PostCard from '@/components/post/PostCard';
 import SearchForm from '@/components/search/SearchForm';
 
 interface Props {
-  searchParams: Promise<{ q?: string; faction?: string; points?: string }>;
+  searchParams: Promise<{ q?: string; faction?: string; points?: string; period?: string }>;
 }
 
 export default async function SearchPage({ searchParams }: Props) {
-  const { q, faction, points } = await searchParams;
+  const { q, faction, points, period } = await searchParams;
 
   const [factions, results, t, locale] = await Promise.all([
     getFactions(),
@@ -19,9 +19,15 @@ export default async function SearchPage({ searchParams }: Props) {
     getLocale(),
   ]);
 
+  const periodDays: Record<string, number> = { '7d': 7, '30d': 30, '90d': 90 };
+  const cutoff = period && periodDays[period]
+    ? new Date(Date.now() - periodDays[period] * 86400_000).toISOString()
+    : null;
+
   const filtered = results.filter((p) => {
     if (faction && (p.factions as { id: string } | null)?.id !== faction) return false;
     if (points && p.points !== parseInt(points)) return false;
+    if (cutoff && p.created_at < cutoff) return false;
     return true;
   });
 

@@ -79,7 +79,11 @@
     "noResultsHint": "別のキーワードで試してみてください",
     "resultsCount": "{count}件の結果",
     "allArmies": "全アーミー",
-    "allPoints": "全ポイント"
+    "allPoints": "全ポイント",
+    "allPeriods": "全期間",
+    "period7d": "1週間",
+    "period30d": "1ヶ月",
+    "period90d": "3ヶ月"
   },
   "notifications": {
     "title": "通知",
