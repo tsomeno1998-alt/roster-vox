@@ -1,4 +1,5 @@
 import { getTranslations, getLocale } from 'next-intl/server';
+import { version } from '@/package.json';
 import { redirect } from '@/i18n/navigation';
 import { Link } from '@/i18n/navigation';
 import { getCurrentUser, getCurrentProfile, getProfileStats } from '@/lib/queries/profiles';
@@ -89,6 +90,8 @@ export default async function ProfilePage() {
             posts.map((post) => <PostCard key={post.id} post={post as any} locale={locale} />)
           )}
         </div>
+
+        <p className="text-xs text-tx-light text-center mt-8 mb-2">v{version}</p>
       </div>
     </div>
   );
