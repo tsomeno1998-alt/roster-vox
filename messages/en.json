@@ -120,6 +120,7 @@
     "emailPlaceholder": "Email",
     "passwordPlaceholder": "Password",
     "passwordSignupPlaceholder": "Password (6+ characters)",
+    "displayNamePlaceholder": "Display Name",
     "loginButton": "Log in",
     "signupButton": "Create account",
     "terms": "By logging in, you agree to our Terms of Service and Privacy Policy.",

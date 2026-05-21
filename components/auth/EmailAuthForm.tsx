@@ -57,6 +57,7 @@ export default function EmailAuthForm({ error }: Props) {
         </form>
       ) : (
         <form action={signUpWithEmail} className="flex flex-col gap-3">
+          <input type="text" name="display_name" required autoComplete="name" placeholder={t('displayNamePlaceholder')} className={inputCls} />
           <input type="email" name="email" required autoComplete="email" placeholder={t('emailPlaceholder')} className={inputCls} />
           <input type="password" name="password" required minLength={6} autoComplete="new-password" placeholder={t('passwordSignupPlaceholder')} className={inputCls} />
           <Button type="submit" variant="primary" fullWidth>{t('signupButton')}</Button>

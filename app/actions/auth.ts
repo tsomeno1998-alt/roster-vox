@@ -45,17 +45,26 @@ export async function signInWithDiscord() {
 export async function signUpWithEmail(formData: FormData) {
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
+  const display_name = (formData.get('display_name') as string)?.trim() || null;
   const supabase = await createClient();
 
   const { data, error } = await supabase.auth.signUp({ email, password });
 
   if (error) await redirect('/login?error=signup');
 
-  // Confirm email immediately via admin so user can log in regardless of Supabase settings
   if (data.user) {
     const admin = createAdminClient();
+    // Confirm email immediately so user can log in regardless of Supabase settings
     await admin.auth.admin.updateUserById(data.user.id, { email_confirm: true });
     await supabase.auth.signInWithPassword({ email, password });
+
+    // Save display name to profile
+    if (display_name) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      await (admin as any)
+        .from('profiles')
+        .upsert({ id: data.user.id, display_name }, { onConflict: 'id' });
+    }
   }
 
   await redirect('/timeline?pwa=1');

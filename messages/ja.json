@@ -120,6 +120,7 @@
     "emailPlaceholder": "メールアドレス",
     "passwordPlaceholder": "パスワード",
     "passwordSignupPlaceholder": "パスワード（6文字以上）",
+    "displayNamePlaceholder": "表示名",
     "loginButton": "ログイン",
     "signupButton": "アカウントを作成",
     "terms": "ログインすることで利用規約およびプライバシーポリシーに同意したものとみなします",
