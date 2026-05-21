@@ -1,5 +1,6 @@
 import { cache } from 'react';
 import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/admin';
 
 export interface ProfileRow {
   id: string;
@@ -36,7 +37,9 @@ export async function getCurrentProfile(): Promise<ProfileRow | null> {
     username;
   const avatar_url = user.user_metadata?.avatar_url ?? null;
 
-  const { data: created } = await sb
+  const admin = createAdminClient();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data: created } = await (admin as any)
     .from('profiles')
     .upsert({ id: user.id, username, display_name, avatar_url }, { onConflict: 'id' })
     .select('*')
