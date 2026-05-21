@@ -1,0 +1,64 @@
+import { Suspense } from 'react';
+import { getTranslations, getLocale } from 'next-intl/server';
+import { getPosts } from '@/lib/queries/posts';
+import { getFactions } from '@/lib/queries/profiles';
+import PostCard from '@/components/post/PostCard';
+import TimelineFilters from '@/components/timeline/TimelineFilters';
+
+interface Props {
+  searchParams: Promise<{ sort?: string; faction?: string; points?: string; group?: string }>;
+}
+
+export default async function TimelinePage({ searchParams }: Props) {
+  const { sort, faction, points, group } = await searchParams;
+
+  const [posts, factions, t, locale] = await Promise.all([
+    getPosts({
+      sort: sort === 'popular' ? 'popular' : 'latest',
+      factionId: faction,
+      points: points ? parseInt(points) : undefined,
+    }),
+    getFactions(),
+    getTranslations('timeline'),
+    getLocale(),
+  ]);
+
+  // グループ絞り込み（faction 未指定で group 指定の場合）
+  const filteredPosts = group && !faction
+    ? posts.filter((p) => (p.factions as { group: string } | null)?.group === group)
+    : posts;
+
+  return (
+    <div className="flex flex-col min-h-full">
+      <header className="bg-surface border-b border-bd px-4 pt-12 pb-3 sticky top-0 z-10">
+        <h1 className="text-lg font-bold text-tx mb-3">{t('title')}</h1>
+        <Suspense fallback={null}>
+          <TimelineFilters factions={factions} />
+        </Suspense>
+      </header>
+
+      <div className="flex-1 px-3 py-3 space-y-3">
+        {filteredPosts.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-20 text-center">
+            <div className="w-16 h-16 rounded-2xl bg-primary-light flex items-center justify-center mb-4">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#8b2fc9" strokeWidth="1.5">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
+            </div>
+            <p className="font-semibold text-tx mb-1">{t('empty')}</p>
+            <p className="text-sm text-tx-muted">{t('emptyHint')}</p>
+          </div>
+        ) : (
+          filteredPosts.map((post) => (
+            <PostCard
+              key={post.id}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              post={post as any}
+              locale={locale}
+            />
+          ))
+        )}
+      </div>
+    </div>
+  );
+}

@@ -1,0 +1,28 @@
+{
+  "name": "Roster Vox",
+  "short_name": "Roster Vox",
+  "description": "Warhammer 40kロスター共有コミュニティ",
+  "start_url": "/timeline",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#8b2fc9",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
