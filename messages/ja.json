@@ -170,11 +170,14 @@
     "title": "ホーム画面に追加",
     "subtitle": "アプリとして快適に使えます",
     "androidButton": "ホーム画面に追加する",
-    "iosStep1Title": "Safari / Chrome の共有ボタンをタップ",
+    "iosStep1Title": "Safari の共有ボタンをタップ",
     "iosStep1Hint": "画面下部の↑アイコン",
-    "iosStep2Title": "「ホーム画面に追加」をタップ",
-    "iosStep2Hint": "メニューを下にスクロールすると表示されます",
-    "iosStep2MenuLabel": "ホーム画面に追加",
+    "iosStep2Title": "「表示を増やす」をタップ",
+    "iosStep2Hint": "メニューの一番下にあります",
+    "iosStep2MenuLabel": "表示を増やす",
+    "iosStep3Title": "「ホーム画面に追加」をタップ",
+    "iosStep3Hint": "リストの中から選択してください",
+    "iosStep3MenuLabel": "ホーム画面に追加",
     "noShow": "一定期間表示しない"
   },
   "contact": {

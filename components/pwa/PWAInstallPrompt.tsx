@@ -51,11 +51,29 @@ function IOSGuide({ t }: { t: ReturnType<typeof useTranslations<'pwa'>> }) {
           <div className="bg-white rounded-2xl border border-bd shadow-sm px-4 py-3 flex items-center gap-3">
             <div className="w-10 h-10 bg-white border border-gray-200 rounded-xl shadow flex items-center justify-center shrink-0">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="5" r="1.5" fill="#1c1c1e"/>
+                <circle cx="12" cy="12" r="1.5" fill="#1c1c1e"/>
+                <circle cx="12" cy="19" r="1.5" fill="#1c1c1e"/>
+              </svg>
+            </div>
+            <span className="text-sm font-medium text-tx">{t('iosStep2MenuLabel')}</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex items-start gap-3 p-3 bg-surface-alt rounded-xl border border-bd">
+        <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">3</span>
+        <div className="flex-1 min-w-0">
+          <p className="text-sm font-medium text-tx">{t('iosStep3Title')}</p>
+          <p className="text-xs text-tx-muted mb-2">{t('iosStep3Hint')}</p>
+          <div className="bg-white rounded-2xl border border-bd shadow-sm px-4 py-3 flex items-center gap-3">
+            <div className="w-10 h-10 bg-white border border-gray-200 rounded-xl shadow flex items-center justify-center shrink-0">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                 <rect x="3" y="3" width="18" height="18" rx="4" stroke="#1c1c1e" strokeWidth="1.8"/>
                 <path d="M12 8v8M8 12h8" stroke="#1c1c1e" strokeWidth="2" strokeLinecap="round"/>
               </svg>
             </div>
-            <span className="text-sm font-medium text-tx">{t('iosStep2MenuLabel')}</span>
+            <span className="text-sm font-medium text-tx">{t('iosStep3MenuLabel')}</span>
           </div>
         </div>
       </div>
