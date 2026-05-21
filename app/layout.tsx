@@ -28,6 +28,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang={locale} className={`${geist.variable} h-full`}>
       <body className="h-full antialiased">
         {children}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `if('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js')`,
+          }}
+        />
       </body>
     </html>
   );

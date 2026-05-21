@@ -1,4 +1,5 @@
 import TabBar from '@/components/layout/TabBar';
+import PWAInstallPrompt from '@/components/pwa/PWAInstallPrompt';
 import { getCurrentUser } from '@/lib/queries/profiles';
 import { createClient } from '@/lib/supabase/server';
 
@@ -23,6 +24,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
         {children}
       </main>
       <TabBar unreadCount={unreadCount} />
+      <PWAInstallPrompt />
     </div>
   );
 }

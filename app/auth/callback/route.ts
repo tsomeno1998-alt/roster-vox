@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
       // Accept-Language からロケールを推定
       const acceptLang = request.headers.get('accept-language') ?? '';
       const locale = acceptLang.toLowerCase().includes('ja') ? 'ja' : 'en';
-      return NextResponse.redirect(`${origin}/${locale}/timeline`);
+      return NextResponse.redirect(`${origin}/${locale}/timeline?pwa=1`);
     }
   }
 

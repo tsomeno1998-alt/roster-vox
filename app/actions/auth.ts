@@ -49,7 +49,7 @@ export async function signUpWithEmail(formData: FormData) {
   const { error } = await supabase.auth.signUp({ email, password });
 
   if (error) await redirect('/login?error=signup');
-  await redirect('/timeline');
+  await redirect('/timeline?pwa=1');
 }
 
 export async function signInWithEmail(formData: FormData) {
@@ -63,7 +63,7 @@ export async function signInWithEmail(formData: FormData) {
     await redirect('/login?error=email_not_confirmed');
   }
   if (error) await redirect('/login?error=credentials');
-  await redirect('/timeline');
+  await redirect('/timeline?pwa=1');
 }
 
 export async function signOut() {

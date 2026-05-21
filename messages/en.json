@@ -151,6 +151,17 @@
     "s6Title": "Following",
     "s6Body": "Visit a user's profile by tapping their name on any post. Tap Follow to keep up with their new rosters. You'll see a notification when someone follows you."
   },
+  "pwa": {
+    "title": "Add to Home Screen",
+    "subtitle": "Use as a native app",
+    "androidButton": "Add to Home Screen",
+    "iosStep1Title": "Tap the Share button in Safari / Chrome",
+    "iosStep1Hint": "The ↑ icon at the bottom of the screen",
+    "iosStep2Title": "Tap \"Add to Home Screen\"",
+    "iosStep2Hint": "Scroll down in the menu to find it",
+    "iosStep2MenuLabel": "Add to Home Screen",
+    "noShow": "Don't show for a while"
+  },
   "contact": {
     "title": "Contact",
     "subtitle": "Questions, bug reports, or feedback — we'd love to hear from you.",
