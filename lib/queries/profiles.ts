@@ -1,4 +1,4 @@
-import { unstable_cache } from 'next/cache';
+import { cache } from 'react';
 import { createClient } from '@/lib/supabase/server';
 
 export interface ProfileRow {
@@ -102,17 +102,13 @@ export interface FactionRow {
   group: string;
 }
 
-export const getFactions = unstable_cache(
-  async (): Promise<FactionRow[]> => {
-    const supabase = await createClient();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data } = await (supabase as any)
-      .from('factions')
-      .select('id, name, group')
-      .order('group')
-      .order('name');
-    return (data ?? []) as FactionRow[];
-  },
-  ['factions'],
-  { revalidate: 3600 },
-);
+export const getFactions = cache(async (): Promise<FactionRow[]> => {
+  const supabase = await createClient();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data } = await (supabase as any)
+    .from('factions')
+    .select('id, name, group')
+    .order('group')
+    .order('name');
+  return (data ?? []) as FactionRow[];
+});
