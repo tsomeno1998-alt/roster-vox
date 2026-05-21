@@ -40,7 +40,7 @@ export default async function UserProfilePage({ params }: Props) {
             <polyline points="15 18 9 12 15 6" />
           </svg>
         </Link>
-        <h1 className="text-lg font-bold text-tx">@{profile.username}</h1>
+        <h1 className="text-lg font-bold text-tx">{profile.display_name}</h1>
       </header>
 
       <div className="px-4 py-6">
@@ -48,7 +48,7 @@ export default async function UserProfilePage({ params }: Props) {
           <Avatar src={profile.avatar_url} username={profile.display_name} size="lg" />
           <div className="flex-1">
             <h2 className="font-bold text-tx text-xl">{profile.display_name}</h2>
-            <p className="text-sm text-tx-muted">@{profile.username}</p>
+            {isOwnProfile && <p className="text-sm text-tx-muted">@{profile.username}</p>}
             {profile.bio && <p className="text-sm text-tx mt-2 leading-relaxed">{profile.bio}</p>}
           </div>
         </div>

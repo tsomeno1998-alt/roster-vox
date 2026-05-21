@@ -121,7 +121,6 @@ export default function PWAInstallPrompt() {
   }, []);
 
   function close() {
-    if (noShow) localStorage.setItem(DISMISSED_KEY, String(Date.now()));
     setVisible(false);
   }
 
@@ -175,7 +174,12 @@ export default function PWAInstallPrompt() {
             <input
               type="checkbox"
               checked={noShow}
-              onChange={e => setNoShow(e.target.checked)}
+              onChange={e => {
+                const checked = e.target.checked;
+                setNoShow(checked);
+                if (checked) localStorage.setItem(DISMISSED_KEY, String(Date.now()));
+                else localStorage.removeItem(DISMISSED_KEY);
+              }}
               className="w-4 h-4 accent-primary"
             />
             <span className="text-xs text-tx-muted">{t('noShow')}</span>
