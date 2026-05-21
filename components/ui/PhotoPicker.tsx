@@ -10,11 +10,12 @@ interface Props {
   userId: string;
   label: string;
   hint: string;
+  onUploadChange?: (uploading: boolean) => void;
 }
 
 type Status = 'idle' | 'uploading' | 'done' | 'error';
 
-export default function PhotoPicker({ name = 'photo_url', initialUrl, userId, label, hint }: Props) {
+export default function PhotoPicker({ name = 'photo_url', initialUrl, userId, label, hint, onUploadChange }: Props) {
   const [url, setUrl] = useState<string | null>(initialUrl ?? null);
   const [preview, setPreview] = useState<string | null>(initialUrl ?? null);
   const [status, setStatus] = useState<Status>('idle');
@@ -27,6 +28,7 @@ export default function PhotoPicker({ name = 'photo_url', initialUrl, userId, la
     const localPreview = URL.createObjectURL(file);
     setPreview(localPreview);
     setStatus('uploading');
+    onUploadChange?.(true);
 
     try {
       const compressed = await compressImage(file, { maxPx: 1200, quality: 0.82 });
@@ -47,6 +49,7 @@ export default function PhotoPicker({ name = 'photo_url', initialUrl, userId, la
       setStatus('error');
     } finally {
       URL.revokeObjectURL(localPreview);
+      onUploadChange?.(false);
     }
   };
 

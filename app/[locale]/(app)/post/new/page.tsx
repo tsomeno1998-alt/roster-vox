@@ -3,8 +3,7 @@ import { Link } from '@/i18n/navigation';
 import { redirect } from '@/i18n/navigation';
 import { getFactions, getCurrentUser } from '@/lib/queries/profiles';
 import { createPost } from '@/app/actions/posts';
-import SubmitButton from '@/components/ui/SubmitButton';
-import PhotoPicker from '@/components/ui/PhotoPicker';
+import PostFormFooter from '@/components/post/PostFormFooter';
 import { POINT_OPTIONS } from '@/lib/types';
 
 export default async function NewPostPage() {
@@ -94,11 +93,6 @@ export default async function NewPostPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-tx mb-1.5">{tp('photoLabel')}</label>
-          <PhotoPicker userId={user.id} label={tp('photoPickerLabel')} hint={tp('photoPickerHint')} />
-        </div>
-
-        <div>
           <label className="block text-sm font-medium text-tx mb-1.5">
             {tp('roster')} <span className="text-red-500">*</span>
           </label>
@@ -111,9 +105,13 @@ export default async function NewPostPage() {
           />
         </div>
 
-        <div className="pb-6">
-          <SubmitButton fullWidth size="lg" pendingLabel={tp('posting')}>{tp('submit')}</SubmitButton>
-        </div>
+        <PostFormFooter
+          userId={user.id}
+          photoLabel={tp('photoPickerLabel')}
+          photoHint={tp('photoPickerHint')}
+          submitLabel={tp('submit')}
+          pendingLabel={tp('posting')}
+        />
       </form>
     </div>
   );

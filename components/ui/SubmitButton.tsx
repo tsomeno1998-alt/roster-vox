@@ -15,11 +15,12 @@ interface SubmitButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>
 export default function SubmitButton({
   children,
   pendingLabel,
+  disabled,
   ...props
 }: SubmitButtonProps) {
   const { pending } = useFormStatus();
   return (
-    <Button type="submit" disabled={pending} {...props}>
+    <Button type="submit" disabled={pending || !!disabled} {...props}>
       {pending ? (pendingLabel ?? '送信中...') : children}
     </Button>
   );

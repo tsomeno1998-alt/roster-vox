@@ -5,9 +5,8 @@ import { Link } from '@/i18n/navigation';
 import { getPost } from '@/lib/queries/posts';
 import { getCurrentUser, getFactions, type FactionRow } from '@/lib/queries/profiles';
 import { updatePost, deletePost } from '@/app/actions/posts';
-import SubmitButton from '@/components/ui/SubmitButton';
 import DeletePostButton from '@/components/post/DeletePostButton';
-import PhotoPicker from '@/components/ui/PhotoPicker';
+import PostFormFooter from '@/components/post/PostFormFooter';
 import { POINT_OPTIONS } from '@/lib/types';
 
 interface Props {
@@ -93,7 +92,6 @@ export default async function EditPostPage({ params }: Props) {
 
         <div>
           <label className="block text-sm font-medium text-tx mb-1.5">{tp('photoLabel')}</label>
-          <PhotoPicker userId={user.id} initialUrl={post.photo_url} label={tp('photoPickerLabel')} hint={tp('photoPickerHint')} />
         </div>
 
         <div>
@@ -128,9 +126,14 @@ export default async function EditPostPage({ params }: Props) {
           </div>
         </div>
 
-        <div className="flex gap-3 pb-6">
-          <SubmitButton fullWidth size="lg" pendingLabel={tp('saving')}>{tp('save')}</SubmitButton>
-        </div>
+        <PostFormFooter
+          userId={user.id}
+          initialPhotoUrl={post.photo_url}
+          photoLabel={tp('photoPickerLabel')}
+          photoHint={tp('photoPickerHint')}
+          submitLabel={tp('save')}
+          pendingLabel={tp('saving')}
+        />
       </form>
 
       <div className="px-4 pb-8">
