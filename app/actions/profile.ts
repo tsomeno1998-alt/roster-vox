@@ -1,6 +1,7 @@
 'use server';
 
 import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/admin';
 import { revalidatePath } from 'next/cache';
 import { redirect } from '@/i18n/navigation';
 
@@ -9,8 +10,9 @@ export async function updateAvatar(avatarUrl: string) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return;
 
+  const admin = createAdminClient();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  await (supabase as any)
+  await (admin as any)
     .from('profiles')
     .update({ avatar_url: avatarUrl })
     .eq('id', user.id);
@@ -30,8 +32,9 @@ export async function updateProfile(formData: FormData) {
 
   if (!username || !display_name) return;
 
+  const admin = createAdminClient();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { error } = await (supabase as any)
+  const { error } = await (admin as any)
     .from('profiles')
     .upsert({ id: user.id, username, display_name, bio }, { onConflict: 'id' });
 
