@@ -1,6 +1,7 @@
 'use server';
 
 import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/admin';
 import { headers } from 'next/headers';
 import { redirect as nextRedirect } from 'next/navigation';
 import { redirect } from '@/i18n/navigation';
@@ -46,9 +47,17 @@ export async function signUpWithEmail(formData: FormData) {
   const password = formData.get('password') as string;
   const supabase = await createClient();
 
-  const { error } = await supabase.auth.signUp({ email, password });
+  const { data, error } = await supabase.auth.signUp({ email, password });
 
   if (error) await redirect('/login?error=signup');
+
+  // Confirm email immediately via admin so user can log in regardless of Supabase settings
+  if (data.user) {
+    const admin = createAdminClient();
+    await admin.auth.admin.updateUserById(data.user.id, { email_confirm: true });
+    await supabase.auth.signInWithPassword({ email, password });
+  }
+
   await redirect('/timeline?pwa=1');
 }
 
