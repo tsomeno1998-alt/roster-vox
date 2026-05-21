@@ -14,6 +14,7 @@ interface Faction {
 
 interface TimelineFiltersProps {
   factions: Faction[];
+  isLoggedIn?: boolean;
 }
 
 const GROUPS: FactionGroup[] = ['Imperium', 'Chaos', 'Xenos'];
@@ -23,7 +24,7 @@ const GROUP_COLORS: Record<FactionGroup, string> = {
   Xenos: 'bg-emerald-100 text-emerald-800 border-emerald-300',
 };
 
-export default function TimelineFilters({ factions }: TimelineFiltersProps) {
+export default function TimelineFilters({ factions, isLoggedIn = false }: TimelineFiltersProps) {
   const t = useTranslations('timeline');
   const tf = useTranslations('factions');
   const router = useRouter();
@@ -33,6 +34,7 @@ export default function TimelineFilters({ factions }: TimelineFiltersProps) {
   const currentSort = searchParams.get('sort') ?? 'latest';
   const currentFaction = searchParams.get('faction') ?? '';
   const currentPoints = searchParams.get('points') ?? '';
+  const currentFeed = searchParams.get('feed') ?? '';
 
   const selectedFactionGroup = currentFaction
     ? (factions.find((f) => f.id === currentFaction)?.group as FactionGroup | undefined)
@@ -86,6 +88,18 @@ export default function TimelineFilters({ factions }: TimelineFiltersProps) {
               {label}
             </button>
           ))}
+          {isLoggedIn && (
+            <button
+              onClick={() => update({ feed: currentFeed === 'following' ? '' : 'following' })}
+              className={`text-xs px-3 py-1.5 rounded-full font-medium transition-colors ${
+                currentFeed === 'following'
+                  ? 'bg-primary text-white'
+                  : 'bg-surface border border-bd text-tx-muted hover:border-primary hover:text-primary'
+              }`}
+            >
+              {t('filterFollowing')}
+            </button>
+          )}
         </div>
         <select
           value={currentPoints}

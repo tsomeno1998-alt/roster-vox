@@ -67,14 +67,48 @@ export async function getPosts({
   sort = 'latest',
   limit = 20,
   offset = 0,
+  userId,
+  followingOnly = false,
 }: {
   factionId?: string;
   points?: number;
   sort?: 'latest' | 'popular';
   limit?: number;
   offset?: number;
+  userId?: string;
+  followingOnly?: boolean;
 } = {}): Promise<PostRow[]> {
   const supabase = await createClient();
+
+  if (followingOnly && userId) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: follows } = await (supabase as any)
+      .from('follows')
+      .select('following_id')
+      .eq('follower_id', userId);
+    const ids: string[] = (follows ?? []).map((f: { following_id: string }) => f.following_id);
+    if (ids.length === 0) return [];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let query = (supabase as any).from('posts').select(`
+      *,
+      profiles(id, username, display_name, avatar_url),
+      factions(id, name, group),
+      likes(count),
+      comments(count)
+    `).in('user_id', ids);
+    if (factionId) query = query.eq('faction_id', factionId);
+    if (points) query = query.eq('points', points);
+    query = query.order('created_at', { ascending: false }).range(offset, offset + limit - 1);
+    const { data, error } = await query;
+    if (error) { console.error('getPosts(following):', error); return []; }
+    const rows = (data as RawPost[]).map((p): PostRow => ({
+      ...p,
+      likes_count: extractCount(p.likes),
+      comments_count: extractCount(p.comments),
+    }));
+    if (sort === 'popular') rows.sort((a, b) => b.likes_count - a.likes_count);
+    return rows;
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let query = (supabase as any).from('posts').select(`

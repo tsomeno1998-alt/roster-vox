@@ -1,27 +1,32 @@
 import { Suspense } from 'react';
 import { getTranslations, getLocale } from 'next-intl/server';
 import { getPosts } from '@/lib/queries/posts';
-import { getFactions } from '@/lib/queries/profiles';
+import { getFactions, getCurrentUser } from '@/lib/queries/profiles';
 import PostCard from '@/components/post/PostCard';
 import TimelineFilters from '@/components/timeline/TimelineFilters';
 
 interface Props {
-  searchParams: Promise<{ sort?: string; faction?: string; points?: string; group?: string }>;
+  searchParams: Promise<{ sort?: string; faction?: string; points?: string; group?: string; feed?: string }>;
 }
 
 export default async function TimelinePage({ searchParams }: Props) {
-  const { sort, faction, points, group } = await searchParams;
+  const { sort, faction, points, group, feed } = await searchParams;
+  const followingOnly = feed === 'following';
 
-  const [posts, factions, t, locale] = await Promise.all([
-    getPosts({
-      sort: sort === 'popular' ? 'popular' : 'latest',
-      factionId: faction,
-      points: points ? parseInt(points) : undefined,
-    }),
+  const [user, factions, t, locale] = await Promise.all([
+    getCurrentUser(),
     getFactions(),
     getTranslations('timeline'),
     getLocale(),
   ]);
+
+  const posts = await getPosts({
+    sort: sort === 'popular' ? 'popular' : 'latest',
+    factionId: faction,
+    points: points ? parseInt(points) : undefined,
+    userId: user?.id,
+    followingOnly,
+  });
 
   // グループ絞り込み（faction 未指定で group 指定の場合）
   const filteredPosts = group && !faction
@@ -33,7 +38,7 @@ export default async function TimelinePage({ searchParams }: Props) {
       <header className="bg-surface border-b border-bd px-4 pt-12 pb-3 sticky top-0 z-10">
         <h1 className="text-lg font-bold text-tx mb-3">{t('title')}</h1>
         <Suspense fallback={null}>
-          <TimelineFilters factions={factions} />
+          <TimelineFilters factions={factions} isLoggedIn={!!user} />
         </Suspense>
       </header>
 
@@ -45,8 +50,8 @@ export default async function TimelinePage({ searchParams }: Props) {
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
               </svg>
             </div>
-            <p className="font-semibold text-tx mb-1">{t('empty')}</p>
-            <p className="text-sm text-tx-muted">{t('emptyHint')}</p>
+            <p className="font-semibold text-tx mb-1">{followingOnly ? t('emptyFollowing') : t('empty')}</p>
+            <p className="text-sm text-tx-muted">{followingOnly ? t('emptyFollowingHint') : t('emptyHint')}</p>
           </div>
         ) : (
           filteredPosts.map((post) => (

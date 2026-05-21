@@ -12,8 +12,11 @@
     "sortPopular": "人気",
     "filterAll": "全て",
     "filterAllPoints": "全ポイント",
+    "filterFollowing": "フォロー中",
     "empty": "まだ投稿がありません",
-    "emptyHint": "最初の投稿者になりましょう！"
+    "emptyHint": "最初の投稿者になりましょう！",
+    "emptyFollowing": "フォロー中のユーザーの投稿はありません",
+    "emptyFollowingHint": "ユーザーをフォローすると投稿がここに表示されます"
   },
   "post": {
     "newTitle": "ロスターを投稿",

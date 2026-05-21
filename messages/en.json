@@ -12,8 +12,11 @@
     "sortPopular": "Popular",
     "filterAll": "All",
     "filterAllPoints": "All Points",
+    "filterFollowing": "Following",
     "empty": "No posts yet",
-    "emptyHint": "Be the first to post!"
+    "emptyHint": "Be the first to post!",
+    "emptyFollowing": "No posts from people you follow",
+    "emptyFollowingHint": "Follow users to see their rosters here"
   },
   "post": {
     "newTitle": "Post Roster",
