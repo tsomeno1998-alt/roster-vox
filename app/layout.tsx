@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   manifest: '/manifest.json',
   icons: { icon: '/logo.svg', apple: '/logo.svg' },
   appleWebApp: { capable: true, statusBarStyle: 'default', title: 'Roster Vox' },
+  verification: { google: 'VQBus-KpnR3qb3VurxWB8KH_i3jpOK1p3RNgbRyxAVc' },
 };
 
 export const viewport: Viewport = {
