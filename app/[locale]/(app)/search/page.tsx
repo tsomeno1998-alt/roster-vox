@@ -12,24 +12,26 @@ interface Props {
 export default async function SearchPage({ searchParams }: Props) {
   const { q, faction, points, period } = await searchParams;
 
-  const [factions, results, t, locale] = await Promise.all([
-    getFactions(),
-    q ? searchPosts(q) : Promise.resolve([]),
-    getTranslations('search'),
-    getLocale(),
-  ]);
+  const hasFilter = !!(q || faction || points || period);
 
   const periodDays: Record<string, number> = { '7d': 7, '30d': 30, '90d': 90 };
   const cutoff = period && periodDays[period]
     ? new Date(Date.now() - periodDays[period] * 86400_000).toISOString()
-    : null;
+    : undefined;
 
-  const filtered = results.filter((p) => {
-    if (faction && (p.factions as { id: string } | null)?.id !== faction) return false;
-    if (points && p.points !== parseInt(points)) return false;
-    if (cutoff && p.created_at < cutoff) return false;
-    return true;
-  });
+  const [factions, filtered, t, locale] = await Promise.all([
+    getFactions(),
+    hasFilter
+      ? searchPosts({
+          keyword: q,
+          factionId: faction,
+          points: points ? parseInt(points) : undefined,
+          cutoff,
+        })
+      : Promise.resolve([]),
+    getTranslations('search'),
+    getLocale(),
+  ]);
 
   return (
     <div className="flex flex-col min-h-full">
@@ -41,7 +43,7 @@ export default async function SearchPage({ searchParams }: Props) {
       </header>
 
       <div className="flex-1 px-3 py-3">
-        {!q ? (
+        {!hasFilter ? (
           <div className="flex flex-col items-center justify-center py-20 text-center">
             <svg className="mb-3 text-tx-light" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
               <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
@@ -50,7 +52,7 @@ export default async function SearchPage({ searchParams }: Props) {
           </div>
         ) : filtered.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 text-center">
-            <p className="font-semibold text-tx mb-1">{t('noResults', { q })}</p>
+            <p className="font-semibold text-tx mb-1">{t('noResults', { q: q ?? '' })}</p>
             <p className="text-sm text-tx-muted">{t('noResultsHint')}</p>
           </div>
         ) : (

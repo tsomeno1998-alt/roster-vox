@@ -230,11 +230,21 @@ export async function getUserLikedPostIds(userId: string, postIds: string[]) {
   return new Set(((data ?? []) as { post_id: string }[]).map((l) => l.post_id));
 }
 
-export async function searchPosts(keyword: string): Promise<PostRow[]> {
+export async function searchPosts({
+  keyword,
+  factionId,
+  points,
+  cutoff,
+}: {
+  keyword?: string;
+  factionId?: string;
+  points?: number;
+  cutoff?: string;
+}): Promise<PostRow[]> {
   const supabase = await createClient();
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data } = await (supabase as any)
+  let query = (supabase as any)
     .from('posts')
     .select(`
       *,
@@ -243,9 +253,15 @@ export async function searchPosts(keyword: string): Promise<PostRow[]> {
       likes(count),
       comments(count)
     `)
-    .or(`title.ilike.%${keyword}%,concept.ilike.%${keyword}%`)
     .order('created_at', { ascending: false })
-    .limit(30);
+    .limit(50);
+
+  if (keyword) query = query.or(`title.ilike.%${keyword}%,concept.ilike.%${keyword}%`);
+  if (factionId) query = query.eq('faction_id', factionId);
+  if (points) query = query.eq('points', points);
+  if (cutoff) query = query.gte('created_at', cutoff);
+
+  const { data } = await query;
 
   return ((data ?? []) as RawPost[]).map((p): PostRow => ({
     ...p,

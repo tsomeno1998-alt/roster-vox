@@ -83,7 +83,8 @@
     "allPeriods": "All time",
     "period7d": "1 week",
     "period30d": "1 month",
-    "period90d": "3 months"
+    "period90d": "3 months",
+    "searchButton": "Search"
   },
   "notifications": {
     "title": "Notifications",
