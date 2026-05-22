@@ -1,7 +1,6 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import type { ReactNode } from 'react';
 
 export interface QAValues {
   qa_infiltrators?: number | null;
@@ -22,7 +21,7 @@ interface Props {
   defaultValues?: QAValues;
 }
 
-function IntField({ name, label, defaultValue }: { name: string; label: ReactNode; defaultValue?: number | null }) {
+function IntField({ name, label, defaultValue }: { name: string; label: string; defaultValue?: number | null }) {
   return (
     <div className="flex items-center justify-between gap-3">
       <label htmlFor={name} className="text-xs text-tx-muted flex-1">{label}</label>
@@ -41,7 +40,7 @@ function IntField({ name, label, defaultValue }: { name: string; label: ReactNod
 
 function BoolField({ name, label, defaultValue, yes, no }: {
   name: string;
-  label: ReactNode;
+  label: string;
   defaultValue?: boolean | null;
   yes: string;
   no: string;
@@ -74,7 +73,6 @@ function BoolField({ name, label, defaultValue, yes, no }: {
 
 export default function QAForm({ defaultValues }: Props) {
   const t = useTranslations('qa');
-  const b = (chunks: ReactNode) => <strong className="font-semibold text-tx">{chunks}</strong>;
 
   return (
     <div className="bg-surface-alt rounded-xl p-4 space-y-1">
@@ -84,84 +82,20 @@ export default function QAForm({ defaultValues }: Props) {
       </div>
 
       <div className="space-y-3">
-        <IntField
-          name="qa_infiltrators"
-          label={t.rich('labelInfiltrators', { b })}
-          defaultValue={defaultValues?.qa_infiltrators}
-        />
-        <IntField
-          name="qa_deep_strike"
-          label={t.rich('labelDeepStrike', { b })}
-          defaultValue={defaultValues?.qa_deep_strike}
-        />
-        <IntField
-          name="qa_scout"
-          label={t.rich('labelScout', { b })}
-          defaultValue={defaultValues?.qa_scout}
-        />
-        <IntField
-          name="qa_lone_operative"
-          label={t.rich('labelLoneOperative', { b })}
-          defaultValue={defaultValues?.qa_lone_operative}
-        />
+        <IntField name="qa_infiltrators" label={t('labelInfiltrators')} defaultValue={defaultValues?.qa_infiltrators} />
+        <IntField name="qa_deep_strike"  label={t('labelDeepStrike')}   defaultValue={defaultValues?.qa_deep_strike} />
+        <IntField name="qa_scout"        label={t('labelScout')}        defaultValue={defaultValues?.qa_scout} />
+        <IntField name="qa_lone_operative" label={t('labelLoneOperative')} defaultValue={defaultValues?.qa_lone_operative} />
 
         <div className="border-t border-bd pt-3 space-y-3">
-          <BoolField
-            name="qa_advance_charge"
-            label={t.rich('labelAdvanceCharge', { b })}
-            defaultValue={defaultValues?.qa_advance_charge}
-            yes={t('yes')}
-            no={t('no')}
-          />
-          <BoolField
-            name="qa_surge_move"
-            label={t.rich('labelSurgeMove', { b })}
-            defaultValue={defaultValues?.qa_surge_move}
-            yes={t('yes')}
-            no={t('no')}
-          />
-          <BoolField
-            name="qa_reactive_move"
-            label={t.rich('labelReactiveMove', { b })}
-            defaultValue={defaultValues?.qa_reactive_move}
-            yes={t('yes')}
-            no={t('no')}
-          />
-          <BoolField
-            name="qa_reserves"
-            label={t.rich('labelReserves', { b })}
-            defaultValue={defaultValues?.qa_reserves}
-            yes={t('yes')}
-            no={t('no')}
-          />
-          <BoolField
-            name="qa_feel_no_pain"
-            label={t.rich('labelFeelNoPain', { b })}
-            defaultValue={defaultValues?.qa_feel_no_pain}
-            yes={t('yes')}
-            no={t('no')}
-          />
-          <BoolField
-            name="qa_damage_reduction"
-            label={t.rich('labelDamageReduction', { b })}
-            defaultValue={defaultValues?.qa_damage_reduction}
-            yes={t('yes')}
-            no={t('no')}
-          />
-          <BoolField
-            name="qa_oc_modifier"
-            label={t.rich('labelOcModifier', { b })}
-            defaultValue={defaultValues?.qa_oc_modifier}
-            yes={t('yes')}
-            no={t('no')}
-          />
-          <BoolField
-            name="qa_battleshock"
-            label={t.rich('labelBattleshock', { b })}
-            defaultValue={defaultValues?.qa_battleshock}
-            yes={t('yes')}
-            no={t('no')}
-          />
+          <BoolField name="qa_advance_charge"   label={t('labelAdvanceCharge')}   defaultValue={defaultValues?.qa_advance_charge}   yes={t('yes')} no={t('no')} />
+          <BoolField name="qa_surge_move"       label={t('labelSurgeMove')}       defaultValue={defaultValues?.qa_surge_move}       yes={t('yes')} no={t('no')} />
+          <BoolField name="qa_reactive_move"    label={t('labelReactiveMove')}    defaultValue={defaultValues?.qa_reactive_move}    yes={t('yes')} no={t('no')} />
+          <BoolField name="qa_reserves"         label={t('labelReserves')}        defaultValue={defaultValues?.qa_reserves}         yes={t('yes')} no={t('no')} />
+          <BoolField name="qa_feel_no_pain"     label={t('labelFeelNoPain')}      defaultValue={defaultValues?.qa_feel_no_pain}     yes={t('yes')} no={t('no')} />
+          <BoolField name="qa_damage_reduction" label={t('labelDamageReduction')} defaultValue={defaultValues?.qa_damage_reduction} yes={t('yes')} no={t('no')} />
+          <BoolField name="qa_oc_modifier"      label={t('labelOcModifier')}      defaultValue={defaultValues?.qa_oc_modifier}      yes={t('yes')} no={t('no')} />
+          <BoolField name="qa_battleshock"      label={t('labelBattleshock')}     defaultValue={defaultValues?.qa_battleshock}      yes={t('yes')} no={t('no')} />
         </div>
       </div>
     </div>
