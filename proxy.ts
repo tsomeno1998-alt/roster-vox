@@ -31,6 +31,8 @@ export async function proxy(request: NextRequest) {
     rest === '/verify-email' ||
     rest.startsWith('/auth/');
 
+  const isPublicRoute = rest.startsWith('/posts/');
+
   // Auth callbackはi18nリダイレクトをスキップ（ロケールプレフィックスなしで直接処理）
   if (pathname.startsWith('/auth/')) {
     return NextResponse.next({ request });
@@ -69,7 +71,7 @@ export async function proxy(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user && !isAuthRoute) {
+  if (!user && !isAuthRoute && !isPublicRoute) {
     return NextResponse.redirect(new URL(`/${locale}/login`, request.url));
   }
 

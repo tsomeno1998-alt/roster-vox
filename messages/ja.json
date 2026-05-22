@@ -58,6 +58,7 @@
     "commentPosting": "投稿中...",
     "expandRoster": "すべて表示（{lines}行）▼",
     "collapseRoster": "折りたたむ ▲",
+    "unitsOnly": "ユニット名のみ",
     "likeCount": "{count} いいね",
     "commentCount": "{count} コメント",
     "usedCount": "{count} 使ってみた",
@@ -158,7 +159,11 @@
     "title": "共有",
     "copyLink": "リンクをコピー",
     "copied": "コピーしました！",
-    "shareToX": "Xでシェア"
+    "shareToX": "Xでシェア",
+    "showQR": "QRコードを表示",
+    "qrCode": "QRコード",
+    "qrHint": "スキャンするとアカウントなしで閲覧できます",
+    "back": "戻る"
   },
   "result": {
     "win": "✅ 勝ち",

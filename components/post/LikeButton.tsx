@@ -8,15 +8,17 @@ interface LikeButtonProps {
   postId: string;
   initialCount: number;
   initialLiked: boolean;
+  isLoggedIn?: boolean;
 }
 
-export default function LikeButton({ postId, initialCount, initialLiked }: LikeButtonProps) {
+export default function LikeButton({ postId, initialCount, initialLiked, isLoggedIn = true }: LikeButtonProps) {
   const t = useTranslations('post');
   const [liked, setLiked] = useState(initialLiked);
   const [count, setCount] = useState(initialCount);
   const [isPending, startTransition] = useTransition();
 
   const handleClick = () => {
+    if (!isLoggedIn) return;
     const next = !liked;
     setLiked(next);
     setCount(next ? count + 1 : count - 1);
@@ -26,7 +28,7 @@ export default function LikeButton({ postId, initialCount, initialLiked }: LikeB
   return (
     <button
       onClick={handleClick}
-      disabled={isPending}
+      disabled={isPending || !isLoggedIn}
       className={`flex flex-col items-center gap-1 text-xs transition-colors ${
         liked ? 'text-red-500' : 'text-tx-muted hover:text-red-400'
       }`}

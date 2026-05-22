@@ -168,7 +168,7 @@ export default async function PostDetailPage({ params }: Props) {
         </div>
 
         <div className="flex gap-3 py-3 border-y border-bd">
-          <LikeButton postId={id} initialCount={post.likes_count ?? 0} initialLiked={isLiked} />
+          <LikeButton postId={id} initialCount={post.likes_count ?? 0} initialLiked={isLiked} isLoggedIn={!!user} />
           <button className="flex-1 flex flex-col items-center gap-1 text-xs text-tx-muted">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
@@ -183,12 +183,7 @@ export default async function PostDetailPage({ params }: Props) {
           </button>
         </div>
 
-        <div>
-          <h3 className="font-semibold text-tx mb-2">{t('roster')}</h3>
-          <div className="bg-surface-alt rounded-xl p-4">
-            <RosterText text={post.roster_text} />
-          </div>
-        </div>
+        <RosterText text={post.roster_text} />
 
         <div>
           <h3 className="font-semibold text-tx mb-3">{t('comments')} ({comments.length})</h3>

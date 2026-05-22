@@ -58,6 +58,7 @@
     "commentPosting": "Posting...",
     "expandRoster": "Show all ({lines} lines) ▼",
     "collapseRoster": "Collapse ▲",
+    "unitsOnly": "Units only",
     "likeCount": "{count} likes",
     "commentCount": "{count} comments",
     "usedCount": "{count} field reports",
@@ -158,7 +159,11 @@
     "title": "Share",
     "copyLink": "Copy Link",
     "copied": "Copied!",
-    "shareToX": "Share on X"
+    "shareToX": "Share on X",
+    "showQR": "Show QR Code",
+    "qrCode": "QR Code",
+    "qrHint": "Anyone can view this post by scanning — no account needed",
+    "back": "Back"
   },
   "result": {
     "win": "✅ Win",
