@@ -1,4 +1,5 @@
 import { getTranslations } from 'next-intl/server';
+import { Link } from '@/i18n/navigation';
 import { signInWithGoogle, signInWithDiscord } from '@/app/actions/auth';
 import EmailAuthForm, { EMAIL_ERRORS } from '@/components/auth/EmailAuthForm';
 import Button from '@/components/ui/Button';
@@ -51,7 +52,10 @@ export default async function LoginPage({ searchParams }: Props) {
       <EmailAuthForm error={error} />
 
       <p className="mt-8 text-xs text-tx-light text-center max-w-xs">
-        {t('terms')}
+        {t.rich('terms', {
+          termsLink: (chunks) => <Link href="/terms" className="underline hover:text-primary">{chunks}</Link>,
+          privacyLink: (chunks) => <Link href="/privacy" className="underline hover:text-primary">{chunks}</Link>,
+        })}
       </p>
     </div>
   );

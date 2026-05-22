@@ -31,7 +31,10 @@ export async function proxy(request: NextRequest) {
     rest === '/verify-email' ||
     rest.startsWith('/auth/');
 
-  const isPublicRoute = rest.startsWith('/posts/');
+  const isPublicRoute =
+    rest.startsWith('/posts/') ||
+    rest === '/terms' ||
+    rest === '/privacy';
 
   // Auth callbackはi18nリダイレクトをスキップ（ロケールプレフィックスなしで直接処理）
   if (pathname.startsWith('/auth/')) {

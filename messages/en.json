@@ -138,7 +138,7 @@
   },
   "auth": {
     "title": "Roster Vox",
-    "subtitle": "Warhammer 40k Roster Sharing Community",
+    "subtitle": "Roster Sharing Community",
     "googleLogin": "Continue with Google",
     "discordLogin": "Continue with Discord",
     "orSeparator": "or",
@@ -150,7 +150,7 @@
     "displayNamePlaceholder": "Display Name",
     "loginButton": "Log in",
     "signupButton": "Create account",
-    "terms": "By logging in, you agree to our Terms of Service and Privacy Policy.",
+    "terms": "By logging in, you agree to our <termsLink>Terms of Service</termsLink> and <privacyLink>Privacy Policy</privacyLink>.",
     "errorOAuth": "Login failed. Please try again.",
     "errorCredentials": "Invalid email or password",
     "errorEmailNotConfirmed": "Email not verified. Please click the link in the confirmation email.",
