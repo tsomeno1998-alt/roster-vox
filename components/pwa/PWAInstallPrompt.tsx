@@ -162,10 +162,10 @@ export default function PWAInstallPrompt() {
   if (!visible || !device) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end">
+    <div className="fixed inset-0 z-[60] flex items-end">
       <div className="absolute inset-0 bg-black/40" onClick={close} />
       <div className="relative w-full bg-surface rounded-t-2xl shadow-xl max-h-[85vh] overflow-y-auto">
-        <div className="p-5 pb-10">
+        <div className="p-5 pb-[calc(4rem+env(safe-area-inset-bottom))]">
           <div className="flex items-center justify-between mb-5">
             <div className="flex items-center gap-3">
               {/* eslint-disable-next-line @next/next/no-img-element */}
