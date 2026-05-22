@@ -89,3 +89,14 @@ export async function signOut() {
   await supabase.auth.signOut();
   await redirect('/login');
 }
+
+export async function deleteAccount() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return await redirect('/login');
+
+  const admin = createAdminClient();
+  await admin.auth.admin.deleteUser(user.id);
+  await supabase.auth.signOut();
+  await redirect('/login');
+}

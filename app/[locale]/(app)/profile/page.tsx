@@ -4,10 +4,12 @@ import { redirect } from '@/i18n/navigation';
 import { Link } from '@/i18n/navigation';
 import { getCurrentUser, getCurrentProfile, getProfileStats } from '@/lib/queries/profiles';
 import { getUserPosts } from '@/lib/queries/posts';
-import { signOut } from '@/app/actions/auth';
+import { signOut, deleteAccount } from '@/app/actions/auth';
 import Avatar from '@/components/ui/Avatar';
 import Button from '@/components/ui/Button';
 import PostCard from '@/components/post/PostCard';
+import LogoutButton from '@/components/profile/LogoutButton';
+import DeleteAccountButton from '@/components/profile/DeleteAccountButton';
 
 export default async function ProfilePage() {
   const [user, profile] = await Promise.all([getCurrentUser(), getCurrentProfile()]);
@@ -24,11 +26,7 @@ export default async function ProfilePage() {
     <div className="flex flex-col">
       <header className="bg-surface border-b border-bd px-4 pt-12 pb-3 sticky top-0 z-10 flex items-center justify-between">
         <h1 className="text-lg font-bold text-tx">{t('title')}</h1>
-        <form action={signOut}>
-          <button type="submit" className="text-xs text-tx-muted hover:text-red-500 transition-colors">
-            {t('logout')}
-          </button>
-        </form>
+        <LogoutButton action={signOut} />
       </header>
 
       <div className="px-4 py-6">
@@ -91,7 +89,10 @@ export default async function ProfilePage() {
           )}
         </div>
 
-        <p className="text-xs text-tx-light text-center mt-8 mb-2">v{version}</p>
+        <div className="mt-8 mb-2 flex flex-col items-center gap-3">
+          <DeleteAccountButton action={deleteAccount} />
+          <p className="text-xs text-tx-light">v{version}</p>
+        </div>
       </div>
     </div>
   );
