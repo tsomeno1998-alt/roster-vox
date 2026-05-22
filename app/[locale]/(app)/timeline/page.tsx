@@ -2,8 +2,11 @@ import { Suspense } from 'react';
 import { getTranslations, getLocale } from 'next-intl/server';
 import { getPosts } from '@/lib/queries/posts';
 import { getFactions, getCurrentUser } from '@/lib/queries/profiles';
-import PostCard from '@/components/post/PostCard';
 import TimelineFilters from '@/components/timeline/TimelineFilters';
+import PostList from '@/components/timeline/PostList';
+import type { TimelineFilters as TFilters } from '@/app/actions/timeline';
+
+const LIMIT = 20;
 
 interface Props {
   searchParams: Promise<{ sort?: string; faction?: string; points?: string; group?: string; feed?: string }>;
@@ -20,17 +23,18 @@ export default async function TimelinePage({ searchParams }: Props) {
     getLocale(),
   ]);
 
-  const posts = await getPosts({
+  const filters: TFilters = {
     sort: sort === 'popular' ? 'popular' : 'latest',
     factionId: faction,
     points: points ? parseInt(points) : undefined,
+    group,
     userId: user?.id,
     followingOnly,
-  });
+  };
 
-  const filteredPosts = group && !faction
-    ? posts.filter((p) => (p.factions as { group: string } | null)?.group === group)
-    : posts;
+  const posts = await getPosts({ ...filters, limit: LIMIT, offset: 0 });
+  const hasMore = posts.length === LIMIT;
+  const listKey = [sort, faction, points, group, feed].join('-');
 
   return (
     <div className="flex flex-col min-h-full">
@@ -45,8 +49,8 @@ export default async function TimelinePage({ searchParams }: Props) {
         </Suspense>
       </header>
 
-      <div className="flex-1 px-3 py-3 space-y-3">
-        {filteredPosts.length === 0 ? (
+      <div className="flex-1 px-3 py-3">
+        {posts.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 text-center">
             <div className="w-16 h-16 rounded-2xl bg-primary-light flex items-center justify-center mb-4">
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#8b2fc9" strokeWidth="1.5">
@@ -57,14 +61,13 @@ export default async function TimelinePage({ searchParams }: Props) {
             <p className="text-sm text-tx-muted">{followingOnly ? t('emptyFollowingHint') : t('emptyHint')}</p>
           </div>
         ) : (
-          filteredPosts.map((post) => (
-            <PostCard
-              key={post.id}
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              post={post as any}
-              locale={locale}
-            />
-          ))
+          <PostList
+            key={listKey}
+            initialPosts={posts}
+            initialHasMore={hasMore}
+            filters={filters}
+            locale={locale}
+          />
         )}
       </div>
     </div>

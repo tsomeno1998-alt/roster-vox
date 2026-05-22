@@ -97,6 +97,7 @@ export async function getPosts({
   offset = 0,
   userId,
   followingOnly = false,
+  group,
 }: {
   factionId?: string;
   points?: number;
@@ -105,8 +106,18 @@ export async function getPosts({
   offset?: number;
   userId?: string;
   followingOnly?: boolean;
+  group?: string;
 } = {}): Promise<PostRow[]> {
   const supabase = await createClient();
+
+  // Resolve group → faction IDs for DB-side filtering
+  let groupFactionIds: string[] | undefined;
+  if (group && !factionId) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: gf } = await (supabase as any).from('factions').select('id').eq('group', group);
+    groupFactionIds = (gf ?? []).map((f: { id: string }) => f.id);
+    if (groupFactionIds!.length === 0) return [];
+  }
 
   if (followingOnly && userId) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -125,6 +136,7 @@ export async function getPosts({
       comments(count)
     `).in('user_id', ids);
     if (factionId) query = query.eq('faction_id', factionId);
+    if (groupFactionIds) query = query.in('faction_id', groupFactionIds);
     if (points) query = query.eq('points', points);
     query = query.order('created_at', { ascending: false }).range(offset, offset + limit - 1);
     const { data, error } = await query;
@@ -148,6 +160,7 @@ export async function getPosts({
   `);
 
   if (factionId) query = query.eq('faction_id', factionId);
+  if (groupFactionIds) query = query.in('faction_id', groupFactionIds);
   if (points) query = query.eq('points', points);
 
   query = query

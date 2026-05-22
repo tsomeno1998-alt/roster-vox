@@ -21,7 +21,8 @@
     "empty": "No posts yet",
     "emptyHint": "Be the first to post!",
     "emptyFollowing": "No posts from people you follow",
-    "emptyFollowingHint": "Follow users to see their rosters here"
+    "emptyFollowingHint": "Follow users to see their rosters here",
+    "allLoaded": "No more posts"
   },
   "post": {
     "newTitle": "Post Roster",

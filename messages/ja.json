@@ -21,7 +21,8 @@
     "empty": "まだ投稿がありません",
     "emptyHint": "最初の投稿者になりましょう！",
     "emptyFollowing": "フォロー中のユーザーの投稿はありません",
-    "emptyFollowingHint": "ユーザーをフォローすると投稿がここに表示されます"
+    "emptyFollowingHint": "ユーザーをフォローすると投稿がここに表示されます",
+    "allLoaded": "すべて表示しました"
   },
   "post": {
     "newTitle": "ロスターを投稿",
