@@ -23,8 +23,10 @@ export default function QASection({ post }: Props) {
 
   const hasQA = [
     post.qa_infiltrators, post.qa_deep_strike, post.qa_scout, post.qa_lone_operative,
+    post.qa_fights_first,
     post.qa_advance_charge, post.qa_surge_move, post.qa_reactive_move, post.qa_reserves,
     post.qa_feel_no_pain, post.qa_damage_reduction, post.qa_oc_modifier, post.qa_battleshock,
+    post.qa_fight_on_death,
   ].some((v) => v !== null);
 
   if (!hasQA) return null;
@@ -68,6 +70,9 @@ export default function QASection({ post }: Props) {
           {post.qa_lone_operative !== null && (
             <QARow label={t('labelLoneOperative')} answer={String(post.qa_lone_operative)} />
           )}
+          {post.qa_fights_first !== null && (
+            <QARow label={t('labelFightsFirst')} answer={String(post.qa_fights_first)} />
+          )}
           {post.qa_advance_charge !== null && (
             <QARow label={t('labelAdvanceCharge')} answer={yn(post.qa_advance_charge)} />
           )}
@@ -91,6 +96,9 @@ export default function QASection({ post }: Props) {
           )}
           {post.qa_battleshock !== null && (
             <QARow label={t('labelBattleshock')} answer={yn(post.qa_battleshock)} />
+          )}
+          {post.qa_fight_on_death !== null && (
+            <QARow label={t('labelFightOnDeath')} answer={yn(post.qa_fight_on_death)} />
           )}
         </div>
       )}

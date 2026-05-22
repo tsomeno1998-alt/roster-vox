@@ -98,7 +98,8 @@
     "period30d": "1ヶ月",
     "period90d": "3ヶ月",
     "searchButton": "検索する",
-    "filterFollowing": "フォロー中のみ"
+    "filterFollowing": "フォロー中のみ",
+    "usersTitle": "ユーザー"
   },
   "notifications": {
     "title": "通知",
@@ -178,6 +179,7 @@
     "labelDeepStrike": "縦深攻撃があるユニット数",
     "labelScout": "斥候があるユニット数",
     "labelLoneOperative": "単独工作員があるユニット数",
+    "labelFightsFirst": "先手があるユニット数",
     "labelAdvanceCharge": "全力移動突撃ができるユニットはあるか？",
     "labelSurgeMove": "猛進移動があるか？",
     "labelReactiveMove": "反応移動(接敵不可)があるか？",
@@ -185,7 +187,8 @@
     "labelFeelNoPain": "傷が回復するアビリティはあるか？",
     "labelDamageReduction": "ダメージ軽減アビリティはあるか？",
     "labelOcModifier": "OCを変えるアビリティはあるか？",
-    "labelBattleshock": "バトルショックを強要するアビリティはあるか？"
+    "labelBattleshock": "バトルショックを強要するアビリティはあるか？",
+    "labelFightOnDeath": "死んでも殴り返しはありますか？"
   },
   "result": {
     "win": "✅ 勝ち",

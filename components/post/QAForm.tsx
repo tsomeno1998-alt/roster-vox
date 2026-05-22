@@ -7,6 +7,7 @@ export interface QAValues {
   qa_deep_strike?: number | null;
   qa_scout?: number | null;
   qa_lone_operative?: number | null;
+  qa_fights_first?: number | null;
   qa_advance_charge?: boolean | null;
   qa_surge_move?: boolean | null;
   qa_reactive_move?: boolean | null;
@@ -15,6 +16,7 @@ export interface QAValues {
   qa_damage_reduction?: boolean | null;
   qa_oc_modifier?: boolean | null;
   qa_battleshock?: boolean | null;
+  qa_fight_on_death?: boolean | null;
 }
 
 interface Props {
@@ -86,6 +88,7 @@ export default function QAForm({ defaultValues }: Props) {
         <IntField name="qa_deep_strike"  label={t('labelDeepStrike')}   defaultValue={defaultValues?.qa_deep_strike} />
         <IntField name="qa_scout"        label={t('labelScout')}        defaultValue={defaultValues?.qa_scout} />
         <IntField name="qa_lone_operative" label={t('labelLoneOperative')} defaultValue={defaultValues?.qa_lone_operative} />
+        <IntField name="qa_fights_first"   label={t('labelFightsFirst')}   defaultValue={defaultValues?.qa_fights_first} />
 
         <div className="border-t border-bd pt-3 space-y-3">
           <BoolField name="qa_advance_charge"   label={t('labelAdvanceCharge')}   defaultValue={defaultValues?.qa_advance_charge}   yes={t('yes')} no={t('no')} />
@@ -96,6 +99,7 @@ export default function QAForm({ defaultValues }: Props) {
           <BoolField name="qa_damage_reduction" label={t('labelDamageReduction')} defaultValue={defaultValues?.qa_damage_reduction} yes={t('yes')} no={t('no')} />
           <BoolField name="qa_oc_modifier"      label={t('labelOcModifier')}      defaultValue={defaultValues?.qa_oc_modifier}      yes={t('yes')} no={t('no')} />
           <BoolField name="qa_battleshock"      label={t('labelBattleshock')}     defaultValue={defaultValues?.qa_battleshock}      yes={t('yes')} no={t('no')} />
+          <BoolField name="qa_fight_on_death"   label={t('labelFightOnDeath')}    defaultValue={defaultValues?.qa_fight_on_death}    yes={t('yes')} no={t('no')} />
         </div>
       </div>
     </div>

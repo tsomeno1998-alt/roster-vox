@@ -1,8 +1,10 @@
 import { Suspense } from 'react';
 import { getTranslations, getLocale } from 'next-intl/server';
+import { Link } from '@/i18n/navigation';
 import { searchPosts } from '@/lib/queries/posts';
-import { getFactions, getCurrentUser } from '@/lib/queries/profiles';
+import { getFactions, getCurrentUser, searchProfiles } from '@/lib/queries/profiles';
 import PostCard from '@/components/post/PostCard';
+import Avatar from '@/components/ui/Avatar';
 import SearchForm from '@/components/search/SearchForm';
 
 interface Props {
@@ -27,16 +29,19 @@ export default async function SearchPage({ searchParams }: Props) {
     getLocale(),
   ]);
 
-  const rawResults = hasFilter
-    ? await searchPosts({
-        keyword: q,
-        factionId: faction,
-        points: points ? parseInt(points) : undefined,
-        cutoff,
-        followingOnly,
-        userId: currentUser?.id,
-      })
-    : [];
+  const [rawResults, userResults] = await Promise.all([
+    hasFilter
+      ? searchPosts({
+          keyword: q,
+          factionId: faction,
+          points: points ? parseInt(points) : undefined,
+          cutoff,
+          followingOnly,
+          userId: currentUser?.id,
+        })
+      : Promise.resolve([]),
+    q ? searchProfiles(q) : Promise.resolve([]),
+  ]);
 
   const filtered = winRate
     ? rawResults.filter((p) => {
@@ -67,16 +72,43 @@ export default async function SearchPage({ searchParams }: Props) {
             </svg>
             <p className="text-sm text-tx-muted">{t('enterKeyword')}</p>
           </div>
-        ) : filtered.length === 0 ? (
+        ) : filtered.length === 0 && userResults.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 text-center">
             <p className="font-semibold text-tx mb-1">{t('noResults', { q: q ?? '' })}</p>
             <p className="text-sm text-tx-muted">{t('noResultsHint')}</p>
           </div>
         ) : (
-          <div className="space-y-3">
-            <p className="text-xs text-tx-muted">{t('resultsCount', { count: filtered.length })}</p>
-            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-            {filtered.map((post) => <PostCard key={post.id} post={post as any} locale={locale} />)}
+          <div className="space-y-4">
+            {userResults.length > 0 && (
+              <div>
+                <p className="text-xs font-semibold text-tx-muted mb-2">{t('usersTitle')}</p>
+                <div className="space-y-2">
+                  {userResults.map((p) => (
+                    <Link
+                      key={p.id}
+                      href={`/profile/${p.username}`}
+                      className="flex items-center gap-3 px-3 py-2.5 bg-surface rounded-xl border border-bd active:bg-surface-alt transition-colors"
+                    >
+                      <Avatar src={p.avatar_url} username={p.display_name} size="sm" />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-tx truncate">{p.display_name}</p>
+                        <p className="text-xs text-tx-muted">@{p.username}</p>
+                      </div>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-tx-muted shrink-0">
+                        <polyline points="9 18 15 12 9 6" />
+                      </svg>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+            {filtered.length > 0 && (
+              <div>
+                <p className="text-xs font-semibold text-tx-muted mb-2">{t('resultsCount', { count: filtered.length })}</p>
+                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                {filtered.map((post) => <PostCard key={post.id} post={post as any} locale={locale} />)}
+              </div>
+            )}
           </div>
         )}
       </div>

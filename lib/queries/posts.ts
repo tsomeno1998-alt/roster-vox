@@ -37,6 +37,8 @@ type RawPost = {
   qa_damage_reduction: boolean | null;
   qa_oc_modifier: boolean | null;
   qa_battleshock: boolean | null;
+  qa_fights_first: number | null;
+  qa_fight_on_death: boolean | null;
 };
 
 export interface CommentRow {
@@ -83,6 +85,8 @@ export interface PostRow {
   qa_damage_reduction: boolean | null;
   qa_oc_modifier: boolean | null;
   qa_battleshock: boolean | null;
+  qa_fights_first: number | null;
+  qa_fight_on_death: boolean | null;
 }
 
 export async function getPosts({

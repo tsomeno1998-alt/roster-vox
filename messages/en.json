@@ -98,7 +98,8 @@
     "period30d": "1 month",
     "period90d": "3 months",
     "searchButton": "Search",
-    "filterFollowing": "Following only"
+    "filterFollowing": "Following only",
+    "usersTitle": "Users"
   },
   "notifications": {
     "title": "Notifications",
@@ -178,6 +179,7 @@
     "labelDeepStrike": "Number of units with Deep Strike",
     "labelScout": "Number of units with Scout X\"",
     "labelLoneOperative": "Number of units with Lone Operative",
+    "labelFightsFirst": "Number of units with Fights First",
     "labelAdvanceCharge": "Does any unit have Advance and Charge?",
     "labelSurgeMove": "Does any unit have Surge Move?",
     "labelReactiveMove": "Does any unit have Reactive Move (cannot Engage)?",
@@ -185,7 +187,8 @@
     "labelFeelNoPain": "Does any unit regain lost wounds?",
     "labelDamageReduction": "Does any unit have a damage reduction ability?",
     "labelOcModifier": "Does any unit have an ability that modifies OC?",
-    "labelBattleshock": "Does any unit have an ability that forces Battle-shock tests?"
+    "labelBattleshock": "Does any unit have an ability that forces Battle-shock tests?",
+    "labelFightOnDeath": "Does any unit have Fight on Death?"
   },
   "result": {
     "win": "✅ Win",

@@ -32,6 +32,8 @@ function extractQaFields(formData: FormData) {
     qa_damage_reduction: parseQaBool(formData, 'qa_damage_reduction'),
     qa_oc_modifier:      parseQaBool(formData, 'qa_oc_modifier'),
     qa_battleshock:      parseQaBool(formData, 'qa_battleshock'),
+    qa_fights_first:     parseQaInt(formData,  'qa_fights_first'),
+    qa_fight_on_death:   parseQaBool(formData, 'qa_fight_on_death'),
   };
 }
 

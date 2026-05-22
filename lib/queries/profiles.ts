@@ -119,6 +119,19 @@ export interface FactionRow {
   group: string;
 }
 
+export async function searchProfiles(keyword: string): Promise<ProfileRow[]> {
+  if (!keyword.trim()) return [];
+  const supabase = await createClient();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data } = await (supabase as any)
+    .from('profiles')
+    .select('id, username, display_name, bio, avatar_url, created_at')
+    .or(`display_name.ilike.%${keyword}%,username.ilike.%${keyword}%`)
+    .order('display_name')
+    .limit(10);
+  return (data ?? []) as ProfileRow[];
+}
+
 export const getFactions = cache(async (): Promise<FactionRow[]> => {
   const supabase = await createClient();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
