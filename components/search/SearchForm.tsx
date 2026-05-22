@@ -61,7 +61,7 @@ export default function SearchForm({ factions, isLoggedIn = false }: SearchFormP
         <select
           name="faction"
           defaultValue={currentFaction}
-          className="flex-1 text-xs px-2 py-1.5 rounded-full border border-bd text-tx-muted bg-surface focus:outline-none focus:border-primary"
+          className="flex-1 min-w-0 text-xs px-2 py-1.5 rounded-full border border-bd text-tx-muted bg-surface focus:outline-none focus:border-primary"
         >
           <option value="">{t('allArmies')}</option>
           {factions.map((f) => <option key={f.id} value={f.id}>{f.name}</option>)}
@@ -69,15 +69,17 @@ export default function SearchForm({ factions, isLoggedIn = false }: SearchFormP
         <select
           name="points"
           defaultValue={currentPoints}
-          className="text-xs px-2 py-1.5 rounded-full border border-bd text-tx-muted bg-surface focus:outline-none focus:border-primary"
+          className="flex-1 min-w-0 text-xs px-2 py-1.5 rounded-full border border-bd text-tx-muted bg-surface focus:outline-none focus:border-primary"
         >
           <option value="">{t('allPoints')}</option>
           {POINT_OPTIONS.map((pt) => <option key={pt} value={String(pt)}>{pt}pt</option>)}
         </select>
+      </div>
+      <div className="flex gap-2">
         <select
           name="period"
           defaultValue={currentPeriod}
-          className="text-xs px-2 py-1.5 rounded-full border border-bd text-tx-muted bg-surface focus:outline-none focus:border-primary"
+          className="flex-1 min-w-0 text-xs px-2 py-1.5 rounded-full border border-bd text-tx-muted bg-surface focus:outline-none focus:border-primary"
         >
           <option value="">{t('allPeriods')}</option>
           <option value="7d">{t('period7d')}</option>
@@ -87,7 +89,7 @@ export default function SearchForm({ factions, isLoggedIn = false }: SearchFormP
         <select
           name="winRate"
           defaultValue={currentWinRate}
-          className="text-xs px-2 py-1.5 rounded-full border border-bd text-tx-muted bg-surface focus:outline-none focus:border-primary"
+          className="flex-1 min-w-0 text-xs px-2 py-1.5 rounded-full border border-bd text-tx-muted bg-surface focus:outline-none focus:border-primary"
         >
           <option value="">{t('filterWinRate')}</option>
           <option value="recorded">{t('winRateRecorded')}</option>

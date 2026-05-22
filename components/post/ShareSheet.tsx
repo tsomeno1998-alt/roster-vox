@@ -46,7 +46,7 @@ export default function ShareSheet({ postTitle, postUrl }: Props) {
       {open && (
         <div className="fixed inset-0 z-50 flex items-end">
           <div className="absolute inset-0 bg-black/40" onClick={() => setOpen(false)} />
-          <div className="relative w-full bg-surface rounded-t-2xl shadow-xl p-5 pb-10 max-w-lg mx-auto">
+          <div className="relative w-full bg-surface rounded-t-2xl shadow-xl p-5 pb-[calc(2.5rem+env(safe-area-inset-bottom))] max-w-lg mx-auto">
             <div className="w-10 h-1 bg-bd rounded-full mx-auto mb-5" />
             <h3 className="font-semibold text-tx text-center mb-4">{t('title')}</h3>
             <div className="space-y-3">
