@@ -154,6 +154,12 @@
     "verifyInstructions": "Click the \"Verify email address\" button in the email to log in. If you don't see it, check your spam folder.",
     "backToLogin": "← Back to login"
   },
+  "share": {
+    "title": "Share",
+    "copyLink": "Copy Link",
+    "copied": "Copied!",
+    "shareToX": "Share on X"
+  },
   "result": {
     "win": "✅ Win",
     "loss": "❌ Loss",

@@ -1,5 +1,6 @@
 import { getTranslations, getLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
 import { Link } from '@/i18n/navigation';
 import { getPost, getComments, getUsedReports } from '@/lib/queries/posts';
 import { getCurrentUser, getFactions, isFollowing } from '@/lib/queries/profiles';
@@ -10,6 +11,7 @@ import FactionBadge from '@/components/post/FactionBadge';
 import LikeButton from '@/components/post/LikeButton';
 import FollowButton from '@/components/profile/FollowButton';
 import RecordEditModal from '@/components/post/RecordEditModal';
+import ShareSheet from '@/components/post/ShareSheet';
 import CommentForm from '@/components/post/CommentForm';
 import UsedReportForm from '@/components/post/UsedReportForm';
 import RosterText from '@/components/post/RosterText';
@@ -18,6 +20,36 @@ import type { FactionGroup } from '@/lib/types';
 
 interface Props {
   params: Promise<{ id: string }>;
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params;
+  const [post, locale] = await Promise.all([getPost(id), getLocale()]);
+  if (!post) return {};
+
+  const faction = post.factions as { name: string } | null;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://roster-vox.vercel.app';
+  const url = `${siteUrl}/${locale}/posts/${id}`;
+  const description = [faction?.name, `${post.points}pt`].filter(Boolean).join(' · ');
+
+  return {
+    title: `${post.title} | Roster Vox`,
+    description,
+    openGraph: {
+      title: post.title,
+      description,
+      url,
+      siteName: 'Roster Vox',
+      images: post.photo_url ? [{ url: post.photo_url }] : [],
+      type: 'article',
+    },
+    twitter: {
+      card: post.photo_url ? 'summary_large_image' : 'summary',
+      title: post.title,
+      description,
+      images: post.photo_url ? [post.photo_url] : [],
+    },
+  };
 }
 
 async function getLikeAndProfile(postId: string, userId: string) {
@@ -63,6 +95,9 @@ export default async function PostDetailPage({ params }: Props) {
   const winRate = total > 0 ? Math.round((post.win / total) * 100) : null;
   const updateRecordWithId = updateRecord.bind(null, id);
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://roster-vox.vercel.app';
+  const shareUrl = `${siteUrl}/${locale}/posts/${id}`;
+
   return (
     <div className="flex flex-col min-h-full">
       <header className="bg-surface border-b border-bd px-4 pt-12 pb-3 sticky top-0 z-10 flex items-center gap-3">
@@ -72,6 +107,7 @@ export default async function PostDetailPage({ params }: Props) {
           </svg>
         </Link>
         <h1 className="text-lg font-bold text-tx flex-1">{t('detailTitle')}</h1>
+        <ShareSheet postTitle={post.title} postUrl={shareUrl} />
         {isOwner && (
           <Link href={`/posts/${id}/edit`} className="text-xs text-primary font-medium">{t('editLink')}</Link>
         )}
