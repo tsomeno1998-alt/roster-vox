@@ -1,44 +1,49 @@
 import { Suspense } from 'react';
 import { getTranslations, getLocale } from 'next-intl/server';
 import { searchPosts } from '@/lib/queries/posts';
-import { getFactions } from '@/lib/queries/profiles';
+import { getFactions, getCurrentUser } from '@/lib/queries/profiles';
 import PostCard from '@/components/post/PostCard';
 import SearchForm from '@/components/search/SearchForm';
 
 interface Props {
-  searchParams: Promise<{ q?: string; faction?: string; points?: string; period?: string }>;
+  searchParams: Promise<{ q?: string; faction?: string; points?: string; period?: string; following?: string }>;
 }
 
 export default async function SearchPage({ searchParams }: Props) {
-  const { q, faction, points, period } = await searchParams;
+  const { q, faction, points, period, following } = await searchParams;
 
-  const hasFilter = !!(q || faction || points || period);
+  const followingOnly = following === '1';
+  const hasFilter = !!(q || faction || points || period || followingOnly);
 
   const periodDays: Record<string, number> = { '7d': 7, '30d': 30, '90d': 90 };
   const cutoff = period && periodDays[period]
     ? new Date(Date.now() - periodDays[period] * 86400_000).toISOString()
     : undefined;
 
-  const [factions, filtered, t, locale] = await Promise.all([
+  const [factions, currentUser, t, locale] = await Promise.all([
     getFactions(),
-    hasFilter
-      ? searchPosts({
-          keyword: q,
-          factionId: faction,
-          points: points ? parseInt(points) : undefined,
-          cutoff,
-        })
-      : Promise.resolve([]),
+    getCurrentUser(),
     getTranslations('search'),
     getLocale(),
   ]);
+
+  const filtered = hasFilter
+    ? await searchPosts({
+        keyword: q,
+        factionId: faction,
+        points: points ? parseInt(points) : undefined,
+        cutoff,
+        followingOnly,
+        userId: currentUser?.id,
+      })
+    : [];
 
   return (
     <div className="flex flex-col min-h-full">
       <header className="bg-surface border-b border-bd px-4 pt-12 pb-3 sticky top-0 z-10">
         <h1 className="text-lg font-bold text-tx mb-3">{t('title')}</h1>
         <Suspense fallback={null}>
-          <SearchForm factions={factions} />
+          <SearchForm factions={factions} isLoggedIn={!!currentUser} />
         </Suspense>
       </header>
 

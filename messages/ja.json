@@ -13,6 +13,11 @@
     "filterAll": "全て",
     "filterAllPoints": "全ポイント",
     "filterFollowing": "フォロー中",
+    "filterWinRate": "全戦績",
+    "winRateRecorded": "記録あり",
+    "winRate50": "勝率50%以上",
+    "winRate70": "勝率70%以上",
+    "winRate80": "勝率80%以上",
     "empty": "まだ投稿がありません",
     "emptyHint": "最初の投稿者になりましょう！",
     "emptyFollowing": "フォロー中のユーザーの投稿はありません",
@@ -66,7 +71,14 @@
     "usedReportOpponentNone": "選択しない",
     "usedReportNotesLabel": "感想（任意）",
     "usedReportNotesPlaceholder": "使ってみた感想を書いてください",
-    "usedReportSubmit": "報告を投稿"
+    "usedReportSubmit": "報告を投稿",
+    "recordTitle": "戦績",
+    "recordStats": "{total}戦 {win}勝 {loss}敗 {draw}分",
+    "recordWinRate": "勝率 {rate}%",
+    "recordNone": "未記録",
+    "editRecord": "戦績を編集",
+    "saveRecord": "保存する",
+    "savingRecord": "保存中..."
   },
   "postCard": {
     "record": "{w}勝 {l}敗 {d}分"
@@ -84,7 +96,8 @@
     "period7d": "1週間",
     "period30d": "1ヶ月",
     "period90d": "3ヶ月",
-    "searchButton": "検索する"
+    "searchButton": "検索する",
+    "filterFollowing": "フォロー中のみ"
   },
   "notifications": {
     "title": "通知",

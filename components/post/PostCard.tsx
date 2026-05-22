@@ -14,6 +14,8 @@ interface PostCardProps {
 
 export default function PostCard({ post, locale }: PostCardProps) {
   const { profiles: author, factions: faction } = post;
+  const total = post.win + post.loss + post.draw;
+  const winRate = total > 0 ? Math.round((post.win / total) * 100) : null;
   const record = locale === 'ja'
     ? `${post.win}勝 ${post.loss}敗 ${post.draw}分`
     : `${post.win}W ${post.loss}L ${post.draw}D`;
@@ -41,8 +43,11 @@ export default function PostCard({ post, locale }: PostCardProps) {
           <span className="text-xs font-medium text-primary bg-primary-light px-2 py-0.5 rounded-full">
             {post.points}pt
           </span>
-          {(post.win > 0 || post.loss > 0 || post.draw > 0) && (
-            <span className="text-xs text-tx-muted">{record}</span>
+          {total > 0 && (
+            <span className="text-xs text-tx-muted">
+              {record}
+              {winRate !== null && (locale === 'ja' ? `（勝率${winRate}%）` : ` (${winRate}% WR)`)}
+            </span>
           )}
           <div className="ml-auto flex items-center gap-3 text-xs text-tx-muted">
             <span className="flex items-center gap-1">

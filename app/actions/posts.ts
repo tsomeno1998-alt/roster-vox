@@ -80,6 +80,26 @@ export async function updatePost(id: string, formData: FormData) {
   await redirect(`/posts/${id}`);
 }
 
+export async function updateRecord(id: string, formData: FormData) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  await (supabase as any)
+    .from('posts')
+    .update({
+      win: parseInt(formData.get('win') as string) || 0,
+      loss: parseInt(formData.get('loss') as string) || 0,
+      draw: parseInt(formData.get('draw') as string) || 0,
+    })
+    .eq('id', id)
+    .eq('user_id', user.id);
+
+  revalidatePost(id);
+  revalidateTimeline();
+}
+
 export async function deletePost(id: string) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();

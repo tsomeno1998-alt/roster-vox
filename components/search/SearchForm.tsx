@@ -7,9 +7,10 @@ import { POINT_OPTIONS } from '@/lib/types';
 
 interface SearchFormProps {
   factions: { id: string; name: string; group: string }[];
+  isLoggedIn?: boolean;
 }
 
-export default function SearchForm({ factions }: SearchFormProps) {
+export default function SearchForm({ factions, isLoggedIn = false }: SearchFormProps) {
   const t = useTranslations('search');
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -19,6 +20,7 @@ export default function SearchForm({ factions }: SearchFormProps) {
   const currentFaction = searchParams.get('faction') ?? '';
   const currentPoints = searchParams.get('points') ?? '';
   const currentPeriod = searchParams.get('period') ?? '';
+  const currentFollowing = searchParams.get('following') === '1';
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -28,10 +30,12 @@ export default function SearchForm({ factions }: SearchFormProps) {
     const faction = data.get('faction') as string;
     const points = data.get('points') as string;
     const period = data.get('period') as string;
+    const following = data.get('following') as string;
     if (q) params.set('q', q);
     if (faction) params.set('faction', faction);
     if (points) params.set('points', points);
     if (period) params.set('period', period);
+    if (following) params.set('following', '1');
     router.push(`${pathname}?${params.toString()}`);
   }
 
@@ -78,6 +82,19 @@ export default function SearchForm({ factions }: SearchFormProps) {
           <option value="90d">{t('period90d')}</option>
         </select>
       </div>
+
+      {isLoggedIn && (
+        <label className="flex items-center gap-2 cursor-pointer w-fit">
+          <input
+            type="checkbox"
+            name="following"
+            value="1"
+            defaultChecked={currentFollowing}
+            className="w-4 h-4 accent-primary"
+          />
+          <span className="text-xs text-tx-muted">{t('filterFollowing')}</span>
+        </label>
+      )}
 
       <button
         type="submit"

@@ -6,11 +6,11 @@ import PostCard from '@/components/post/PostCard';
 import TimelineFilters from '@/components/timeline/TimelineFilters';
 
 interface Props {
-  searchParams: Promise<{ sort?: string; faction?: string; points?: string; group?: string; feed?: string }>;
+  searchParams: Promise<{ sort?: string; faction?: string; points?: string; group?: string; feed?: string; winRate?: string }>;
 }
 
 export default async function TimelinePage({ searchParams }: Props) {
-  const { sort, faction, points, group, feed } = await searchParams;
+  const { sort, faction, points, group, feed, winRate } = await searchParams;
   const followingOnly = feed === 'following';
 
   const [user, factions, t, locale] = await Promise.all([
@@ -28,15 +28,27 @@ export default async function TimelinePage({ searchParams }: Props) {
     followingOnly,
   });
 
-  // グループ絞り込み（faction 未指定で group 指定の場合）
-  const filteredPosts = group && !faction
-    ? posts.filter((p) => (p.factions as { group: string } | null)?.group === group)
-    : posts;
+  const filteredPosts = posts.filter((p) => {
+    if (group && !faction && (p.factions as { group: string } | null)?.group !== group) return false;
+    if (winRate) {
+      const total = p.win + p.loss + p.draw;
+      if (total === 0) return false;
+      if (winRate !== 'recorded') {
+        const rate = (p.win / total) * 100;
+        if (rate < parseInt(winRate)) return false;
+      }
+    }
+    return true;
+  });
 
   return (
     <div className="flex flex-col min-h-full">
       <header className="bg-surface border-b border-bd px-4 pt-12 pb-3 sticky top-0 z-10">
-        <h1 className="text-lg font-bold text-tx mb-3">{t('title')}</h1>
+        <div className="flex items-center gap-2 mb-3">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo.svg" alt="" className="w-7 h-7" />
+          <span className="text-lg font-bold text-tx">Roster Vox</span>
+        </div>
         <Suspense fallback={null}>
           <TimelineFilters factions={factions} isLoggedIn={!!user} />
         </Suspense>

@@ -3,11 +3,13 @@ import { notFound } from 'next/navigation';
 import { Link } from '@/i18n/navigation';
 import { getPost, getComments, getUsedReports } from '@/lib/queries/posts';
 import { getCurrentUser, getFactions, isFollowing } from '@/lib/queries/profiles';
+import { updateRecord } from '@/app/actions/posts';
 import { createClient } from '@/lib/supabase/server';
 import Avatar from '@/components/ui/Avatar';
 import FactionBadge from '@/components/post/FactionBadge';
 import LikeButton from '@/components/post/LikeButton';
 import FollowButton from '@/components/profile/FollowButton';
+import RecordEditModal from '@/components/post/RecordEditModal';
 import CommentForm from '@/components/post/CommentForm';
 import UsedReportForm from '@/components/post/UsedReportForm';
 import RosterText from '@/components/post/RosterText';
@@ -57,6 +59,10 @@ export default async function PostDetailPage({ params }: Props) {
     ? await isFollowing(user.id, profile.id)
     : false;
 
+  const total = post.win + post.loss + post.draw;
+  const winRate = total > 0 ? Math.round((post.win / total) * 100) : null;
+  const updateRecordWithId = updateRecord.bind(null, id);
+
   return (
     <div className="flex flex-col min-h-full">
       <header className="bg-surface border-b border-bd px-4 pt-12 pb-3 sticky top-0 z-10 flex items-center gap-3">
@@ -104,12 +110,24 @@ export default async function PostDetailPage({ params }: Props) {
           <span className="text-sm font-medium text-primary bg-primary-light px-3 py-1 rounded-full">
             {post.points}pt
           </span>
-          {(post.win > 0 || post.loss > 0 || post.draw > 0) && (
-            <div className="flex gap-2 text-sm">
-              <span><span className="font-semibold text-emerald-600">{post.win}</span>{t('winLabel')}</span>
-              <span><span className="font-semibold text-red-500">{post.loss}</span>{t('lossLabel')}</span>
-              <span><span className="font-semibold text-tx-muted">{post.draw}</span>{t('drawLabel')}</span>
+        </div>
+
+        <div className="bg-surface-alt rounded-xl p-4">
+          <div className="flex items-center justify-between mb-2">
+            <h3 className="text-sm font-semibold text-tx">{t('recordTitle')}</h3>
+            {isOwner && (
+              <RecordEditModal win={post.win} loss={post.loss} draw={post.draw} action={updateRecordWithId} />
+            )}
+          </div>
+          {total > 0 ? (
+            <div className="flex items-baseline gap-3">
+              <p className="text-base font-bold text-tx">
+                {t('recordStats', { total, win: post.win, loss: post.loss, draw: post.draw })}
+              </p>
+              <p className="text-sm font-medium text-primary">{t('recordWinRate', { rate: winRate ?? 0 })}</p>
             </div>
+          ) : (
+            <p className="text-sm text-tx-muted">{t('recordNone')}</p>
           )}
         </div>
 

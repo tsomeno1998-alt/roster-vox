@@ -13,6 +13,11 @@
     "filterAll": "All",
     "filterAllPoints": "All Points",
     "filterFollowing": "Following",
+    "filterWinRate": "All Records",
+    "winRateRecorded": "Has record",
+    "winRate50": "Win rate 50%+",
+    "winRate70": "Win rate 70%+",
+    "winRate80": "Win rate 80%+",
     "empty": "No posts yet",
     "emptyHint": "Be the first to post!",
     "emptyFollowing": "No posts from people you follow",
@@ -66,7 +71,14 @@
     "usedReportOpponentNone": "Not selected",
     "usedReportNotesLabel": "Notes (optional)",
     "usedReportNotesPlaceholder": "Share your experience...",
-    "usedReportSubmit": "Submit Report"
+    "usedReportSubmit": "Submit Report",
+    "recordTitle": "Battle Record",
+    "recordStats": "{total} games: {win}W {loss}L {draw}D",
+    "recordWinRate": "Win rate: {rate}%",
+    "recordNone": "No record yet",
+    "editRecord": "Edit Record",
+    "saveRecord": "Save",
+    "savingRecord": "Saving..."
   },
   "postCard": {
     "record": "{w}W {l}L {d}D"
@@ -84,7 +96,8 @@
     "period7d": "1 week",
     "period30d": "1 month",
     "period90d": "3 months",
-    "searchButton": "Search"
+    "searchButton": "Search",
+    "filterFollowing": "Following only"
   },
   "notifications": {
     "title": "Notifications",

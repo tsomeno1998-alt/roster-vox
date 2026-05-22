@@ -235,13 +235,28 @@ export async function searchPosts({
   factionId,
   points,
   cutoff,
+  followingOnly = false,
+  userId,
 }: {
   keyword?: string;
   factionId?: string;
   points?: number;
   cutoff?: string;
+  followingOnly?: boolean;
+  userId?: string;
 }): Promise<PostRow[]> {
   const supabase = await createClient();
+
+  let followingIds: string[] | null = null;
+  if (followingOnly && userId) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: follows } = await (supabase as any)
+      .from('follows')
+      .select('following_id')
+      .eq('follower_id', userId);
+    followingIds = (follows ?? []).map((f: { following_id: string }) => f.following_id);
+    if ((followingIds as string[]).length === 0) return [];
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let query = (supabase as any)
@@ -260,6 +275,7 @@ export async function searchPosts({
   if (factionId) query = query.eq('faction_id', factionId);
   if (points) query = query.eq('points', points);
   if (cutoff) query = query.gte('created_at', cutoff);
+  if (followingIds) query = query.in('user_id', followingIds);
 
   const { data } = await query;
 
