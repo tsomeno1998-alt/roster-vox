@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { Link } from '@/i18n/navigation';
 import Avatar from '@/components/ui/Avatar';
 import FactionBadge from '@/components/post/FactionBadge';
@@ -37,20 +36,7 @@ export default function PostCard({ post, locale }: PostCardProps) {
 
         <h3 className="font-semibold text-tx mb-1 line-clamp-1">{post.title}</h3>
         {post.concept && (
-          <p className="text-sm text-tx-muted line-clamp-2 mb-2">{post.concept}</p>
-        )}
-
-        {post.photo_url && (
-          <div className="relative w-full aspect-video rounded-xl overflow-hidden mb-3">
-            <Image
-              src={post.photo_url}
-              alt=""
-              fill
-              className="object-cover"
-              loading="lazy"
-              sizes="(max-width: 640px) 100vw, 640px"
-            />
-          </div>
+          <p className="text-sm text-tx-muted line-clamp-2 mb-3">{post.concept}</p>
         )}
 
         <div className="flex items-center gap-3">
