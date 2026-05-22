@@ -6,11 +6,11 @@ import PostCard from '@/components/post/PostCard';
 import TimelineFilters from '@/components/timeline/TimelineFilters';
 
 interface Props {
-  searchParams: Promise<{ sort?: string; faction?: string; points?: string; group?: string; feed?: string; winRate?: string }>;
+  searchParams: Promise<{ sort?: string; faction?: string; points?: string; group?: string; feed?: string }>;
 }
 
 export default async function TimelinePage({ searchParams }: Props) {
-  const { sort, faction, points, group, feed, winRate } = await searchParams;
+  const { sort, faction, points, group, feed } = await searchParams;
   const followingOnly = feed === 'following';
 
   const [user, factions, t, locale] = await Promise.all([
@@ -28,18 +28,9 @@ export default async function TimelinePage({ searchParams }: Props) {
     followingOnly,
   });
 
-  const filteredPosts = posts.filter((p) => {
-    if (group && !faction && (p.factions as { group: string } | null)?.group !== group) return false;
-    if (winRate) {
-      const total = p.win + p.loss + p.draw;
-      if (total === 0) return false;
-      if (winRate !== 'recorded') {
-        const rate = (p.win / total) * 100;
-        if (rate < parseInt(winRate)) return false;
-      }
-    }
-    return true;
-  });
+  const filteredPosts = group && !faction
+    ? posts.filter((p) => (p.factions as { group: string } | null)?.group === group)
+    : posts;
 
   return (
     <div className="flex flex-col min-h-full">

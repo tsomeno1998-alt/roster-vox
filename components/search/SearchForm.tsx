@@ -20,6 +20,7 @@ export default function SearchForm({ factions, isLoggedIn = false }: SearchFormP
   const currentFaction = searchParams.get('faction') ?? '';
   const currentPoints = searchParams.get('points') ?? '';
   const currentPeriod = searchParams.get('period') ?? '';
+  const currentWinRate = searchParams.get('winRate') ?? '';
   const currentFollowing = searchParams.get('following') === '1';
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -36,6 +37,8 @@ export default function SearchForm({ factions, isLoggedIn = false }: SearchFormP
     if (points) params.set('points', points);
     if (period) params.set('period', period);
     if (following) params.set('following', '1');
+    const winRate = data.get('winRate') as string;
+    if (winRate) params.set('winRate', winRate);
     router.push(`${pathname}?${params.toString()}`);
   }
 
@@ -80,6 +83,17 @@ export default function SearchForm({ factions, isLoggedIn = false }: SearchFormP
           <option value="7d">{t('period7d')}</option>
           <option value="30d">{t('period30d')}</option>
           <option value="90d">{t('period90d')}</option>
+        </select>
+        <select
+          name="winRate"
+          defaultValue={currentWinRate}
+          className="text-xs px-2 py-1.5 rounded-full border border-bd text-tx-muted bg-surface focus:outline-none focus:border-primary"
+        >
+          <option value="">{t('filterWinRate')}</option>
+          <option value="recorded">{t('winRateRecorded')}</option>
+          <option value="50">{t('winRate50')}</option>
+          <option value="70">{t('winRate70')}</option>
+          <option value="80">{t('winRate80')}</option>
         </select>
       </div>
 

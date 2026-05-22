@@ -6,14 +6,14 @@ import PostCard from '@/components/post/PostCard';
 import SearchForm from '@/components/search/SearchForm';
 
 interface Props {
-  searchParams: Promise<{ q?: string; faction?: string; points?: string; period?: string; following?: string }>;
+  searchParams: Promise<{ q?: string; faction?: string; points?: string; period?: string; following?: string; winRate?: string }>;
 }
 
 export default async function SearchPage({ searchParams }: Props) {
-  const { q, faction, points, period, following } = await searchParams;
+  const { q, faction, points, period, following, winRate } = await searchParams;
 
   const followingOnly = following === '1';
-  const hasFilter = !!(q || faction || points || period || followingOnly);
+  const hasFilter = !!(q || faction || points || period || followingOnly || winRate);
 
   const periodDays: Record<string, number> = { '7d': 7, '30d': 30, '90d': 90 };
   const cutoff = period && periodDays[period]
@@ -27,7 +27,7 @@ export default async function SearchPage({ searchParams }: Props) {
     getLocale(),
   ]);
 
-  const filtered = hasFilter
+  const rawResults = hasFilter
     ? await searchPosts({
         keyword: q,
         factionId: faction,
@@ -37,6 +37,18 @@ export default async function SearchPage({ searchParams }: Props) {
         userId: currentUser?.id,
       })
     : [];
+
+  const filtered = winRate
+    ? rawResults.filter((p) => {
+        const total = p.win + p.loss + p.draw;
+        if (total === 0) return false;
+        if (winRate !== 'recorded') {
+          const rate = (p.win / total) * 100;
+          if (rate < parseInt(winRate)) return false;
+        }
+        return true;
+      })
+    : rawResults;
 
   return (
     <div className="flex flex-col min-h-full">

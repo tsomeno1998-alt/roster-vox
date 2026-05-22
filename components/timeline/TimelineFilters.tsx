@@ -35,7 +35,6 @@ export default function TimelineFilters({ factions, isLoggedIn = false }: Timeli
   const currentFaction = searchParams.get('faction') ?? '';
   const currentPoints = searchParams.get('points') ?? '';
   const currentFeed = searchParams.get('feed') ?? '';
-  const currentWinRate = searchParams.get('winRate') ?? '';
 
   const selectedFactionGroup = currentFaction
     ? (factions.find((f) => f.id === currentFaction)?.group as FactionGroup | undefined)
@@ -102,29 +101,16 @@ export default function TimelineFilters({ factions, isLoggedIn = false }: Timeli
             </button>
           )}
         </div>
-        <div className="ml-auto flex gap-1.5">
-          <select
-            value={currentWinRate}
-            onChange={(e) => update({ winRate: e.target.value })}
-            className="text-xs px-2 py-1.5 rounded-full border border-bd text-tx-muted bg-surface focus:outline-none focus:border-primary"
-          >
-            <option value="">{t('filterWinRate')}</option>
-            <option value="recorded">{t('winRateRecorded')}</option>
-            <option value="50">{t('winRate50')}</option>
-            <option value="70">{t('winRate70')}</option>
-            <option value="80">{t('winRate80')}</option>
-          </select>
-          <select
-            value={currentPoints}
-            onChange={(e) => update({ points: e.target.value })}
-            className="text-xs px-2 py-1.5 rounded-full border border-bd text-tx-muted bg-surface focus:outline-none focus:border-primary"
-          >
-            <option value="">{t('filterAllPoints')}</option>
-            {POINT_OPTIONS.map((pt) => (
-              <option key={pt} value={String(pt)}>{pt}pt</option>
-            ))}
-          </select>
-        </div>
+        <select
+          value={currentPoints}
+          onChange={(e) => update({ points: e.target.value })}
+          className="ml-auto text-xs px-2 py-1.5 rounded-full border border-bd text-tx-muted bg-surface focus:outline-none focus:border-primary"
+        >
+          <option value="">{t('filterAllPoints')}</option>
+          {POINT_OPTIONS.map((pt) => (
+            <option key={pt} value={String(pt)}>{pt}pt</option>
+          ))}
+        </select>
       </div>
 
       <div className="flex gap-1.5 overflow-x-auto pb-0.5 scrollbar-none">
