@@ -7,6 +7,7 @@ import { getCurrentUser, getFactions, type FactionRow } from '@/lib/queries/prof
 import { updatePost, deletePost } from '@/app/actions/posts';
 import DeletePostButton from '@/components/post/DeletePostButton';
 import PostFormFooter from '@/components/post/PostFormFooter';
+import QAForm from '@/components/post/QAForm';
 import { POINT_OPTIONS } from '@/lib/types';
 
 interface Props {
@@ -125,6 +126,8 @@ export default async function EditPostPage({ params }: Props) {
             ))}
           </div>
         </div>
+
+        <QAForm defaultValues={post} />
 
         <PostFormFooter
           userId={user.id}

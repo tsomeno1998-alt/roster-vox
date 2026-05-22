@@ -12,9 +12,11 @@ import LikeButton from '@/components/post/LikeButton';
 import FollowButton from '@/components/profile/FollowButton';
 import RecordEditModal from '@/components/post/RecordEditModal';
 import ShareSheet from '@/components/post/ShareSheet';
+import QRModal from '@/components/post/QRModal';
 import CommentForm from '@/components/post/CommentForm';
 import UsedReportForm from '@/components/post/UsedReportForm';
 import RosterText from '@/components/post/RosterText';
+import QASection from '@/components/post/QASection';
 import { timeAgo } from '@/lib/timeAgo';
 import type { FactionGroup } from '@/lib/types';
 
@@ -107,6 +109,7 @@ export default async function PostDetailPage({ params }: Props) {
           </svg>
         </Link>
         <h1 className="text-lg font-bold text-tx flex-1">{t('detailTitle')}</h1>
+        <QRModal postUrl={shareUrl} />
         <ShareSheet postTitle={post.title} postUrl={shareUrl} />
         {isOwner && (
           <Link href={`/posts/${id}/edit`} className="text-xs text-primary font-medium">{t('editLink')}</Link>
@@ -166,6 +169,8 @@ export default async function PostDetailPage({ params }: Props) {
             <p className="text-sm text-tx-muted">{t('recordNone')}</p>
           )}
         </div>
+
+        <QASection post={post} />
 
         <div className="flex gap-3 py-3 border-y border-bd">
           <LikeButton postId={id} initialCount={post.likes_count ?? 0} initialLiked={isLiked} isLoggedIn={!!user} />

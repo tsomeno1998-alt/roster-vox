@@ -4,6 +4,37 @@ import { createClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
 import { redirect } from '@/i18n/navigation';
 
+function parseQaInt(formData: FormData, name: string): number | null {
+  const val = (formData.get(name) as string)?.trim();
+  if (!val) return null;
+  const n = parseInt(val);
+  return isNaN(n) ? null : n;
+}
+
+function parseQaBool(formData: FormData, name: string): boolean | null {
+  const val = formData.get(name) as string;
+  if (val === 'true') return true;
+  if (val === 'false') return false;
+  return null;
+}
+
+function extractQaFields(formData: FormData) {
+  return {
+    qa_infiltrators:     parseQaInt(formData, 'qa_infiltrators'),
+    qa_deep_strike:      parseQaInt(formData, 'qa_deep_strike'),
+    qa_scout:            parseQaInt(formData, 'qa_scout'),
+    qa_lone_operative:   parseQaInt(formData, 'qa_lone_operative'),
+    qa_advance_charge:   parseQaBool(formData, 'qa_advance_charge'),
+    qa_surge_move:       parseQaBool(formData, 'qa_surge_move'),
+    qa_reactive_move:    parseQaBool(formData, 'qa_reactive_move'),
+    qa_reserves:         parseQaBool(formData, 'qa_reserves'),
+    qa_feel_no_pain:     parseQaBool(formData, 'qa_feel_no_pain'),
+    qa_damage_reduction: parseQaBool(formData, 'qa_damage_reduction'),
+    qa_oc_modifier:      parseQaBool(formData, 'qa_oc_modifier'),
+    qa_battleshock:      parseQaBool(formData, 'qa_battleshock'),
+  };
+}
+
 function revalidateTimeline() {
   revalidatePath('/[locale]/timeline', 'page');
 }
@@ -32,7 +63,7 @@ export async function createPost(formData: FormData) {
   const sb = supabase as any;
   const { data, error } = await sb
     .from('posts')
-    .insert({ user_id: user.id, faction_id, points, title, roster_text, photo_url })
+    .insert({ user_id: user.id, faction_id, points, title, roster_text, photo_url, ...extractQaFields(formData) })
     .select('id')
     .single();
 
@@ -69,6 +100,7 @@ export async function updatePost(id: string, formData: FormData) {
       win: parseInt(formData.get('win') as string) || 0,
       loss: parseInt(formData.get('loss') as string) || 0,
       draw: parseInt(formData.get('draw') as string) || 0,
+      ...extractQaFields(formData),
     })
     .eq('id', id)
     .eq('user_id', user.id);

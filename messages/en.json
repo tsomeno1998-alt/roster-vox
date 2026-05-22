@@ -166,6 +166,24 @@
     "close": "Close",
     "back": "Back"
   },
+  "qa": {
+    "title": "Q&A",
+    "optional": "optional",
+    "yes": "Yes",
+    "no": "No",
+    "labelInfiltrators": "Number of units with <b>Infiltrators</b>",
+    "labelDeepStrike": "Number of units with <b>Deep Strike</b>",
+    "labelScout": "Number of units with <b>Scout</b> X\"",
+    "labelLoneOperative": "Number of units with <b>Lone Operative</b>",
+    "labelAdvanceCharge": "Does any unit have Advance and Charge?",
+    "labelSurgeMove": "Does any unit have <b>Surge Move</b>?",
+    "labelReactiveMove": "Does any unit have <b>Reactive Move</b> (cannot Engage)?",
+    "labelReserves": "Can any unit return to Reserves?",
+    "labelFeelNoPain": "Does any unit regain lost wounds?",
+    "labelDamageReduction": "Does any unit have a damage reduction ability?",
+    "labelOcModifier": "Does any unit have an ability that modifies OC?",
+    "labelBattleshock": "Does any unit have an ability that forces <b>Battle-shock</b> tests?"
+  },
   "result": {
     "win": "✅ Win",
     "loss": "❌ Loss",

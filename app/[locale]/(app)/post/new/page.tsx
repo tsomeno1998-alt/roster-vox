@@ -4,6 +4,7 @@ import { redirect } from '@/i18n/navigation';
 import { getFactions, getCurrentUser } from '@/lib/queries/profiles';
 import { createPost } from '@/app/actions/posts';
 import PostFormFooter from '@/components/post/PostFormFooter';
+import QAForm from '@/components/post/QAForm';
 import { POINT_OPTIONS } from '@/lib/types';
 
 export default async function NewPostPage() {
@@ -104,6 +105,8 @@ export default async function NewPostPage() {
             className="w-full px-3 py-2.5 rounded-xl border border-bd bg-surface text-sm text-tx placeholder:text-tx-light focus:outline-none focus:border-primary resize-none font-mono text-xs"
           />
         </div>
+
+        <QAForm />
 
         <PostFormFooter
           userId={user.id}

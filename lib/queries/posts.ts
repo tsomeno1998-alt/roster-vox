@@ -25,6 +25,18 @@ type RawPost = {
   factions: { id: string; name: string; group: string } | null;
   likes: unknown;
   comments: unknown;
+  qa_infiltrators: number | null;
+  qa_deep_strike: number | null;
+  qa_scout: number | null;
+  qa_lone_operative: number | null;
+  qa_advance_charge: boolean | null;
+  qa_surge_move: boolean | null;
+  qa_reactive_move: boolean | null;
+  qa_reserves: boolean | null;
+  qa_feel_no_pain: boolean | null;
+  qa_damage_reduction: boolean | null;
+  qa_oc_modifier: boolean | null;
+  qa_battleshock: boolean | null;
 };
 
 export interface CommentRow {
@@ -59,6 +71,18 @@ export interface PostRow {
   factions: { id: string; name: string; group: string } | null;
   likes_count: number;
   comments_count: number;
+  qa_infiltrators: number | null;
+  qa_deep_strike: number | null;
+  qa_scout: number | null;
+  qa_lone_operative: number | null;
+  qa_advance_charge: boolean | null;
+  qa_surge_move: boolean | null;
+  qa_reactive_move: boolean | null;
+  qa_reserves: boolean | null;
+  qa_feel_no_pain: boolean | null;
+  qa_damage_reduction: boolean | null;
+  qa_oc_modifier: boolean | null;
+  qa_battleshock: boolean | null;
 }
 
 export async function getPosts({
