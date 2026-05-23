@@ -67,7 +67,7 @@ export default async function ProfilePage() {
               className={`flex items-center gap-3 px-4 py-3.5 bg-surface active:bg-surface-alt transition-colors ${i > 0 ? 'border-t border-bd' : ''}`}
             >
               <span className="w-7 h-7 rounded-lg bg-primary-light flex items-center justify-center flex-shrink-0">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8b2fc9" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d={icon} />
                 </svg>
               </span>

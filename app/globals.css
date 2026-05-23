@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  --primary: #8b2fc9;
-  --primary-hover: #7a28b0;
-  --primary-light: #f3e8ff;
+  --primary: #000000;
+  --primary-hover: #222222;
+  --primary-light: #f3f4f6;
   --surface: #FFFFFF;
   --surface-alt: #F9FAFB;
   --bd: #E5E7EB;

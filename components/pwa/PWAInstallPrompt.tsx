@@ -28,9 +28,9 @@ function IOSGuide({ t }: { t: ReturnType<typeof useTranslations<'pwa'>> }) {
             </svg>
             <div className="bg-primary/20 rounded-xl p-2">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                <path d="M12 3v13" stroke="#8b2fc9" strokeWidth="2" strokeLinecap="round"/>
-                <path d="M8 7l4-4 4 4" stroke="#8b2fc9" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M5 13v6a1 1 0 001 1h12a1 1 0 001-1v-6" stroke="#8b2fc9" strokeWidth="2" strokeLinecap="round"/>
+                <path d="M12 3v13" stroke="#000000" strokeWidth="2" strokeLinecap="round"/>
+                <path d="M8 7l4-4 4 4" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M5 13v6a1 1 0 001 1h12a1 1 0 001-1v-6" stroke="#000000" strokeWidth="2" strokeLinecap="round"/>
               </svg>
             </div>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -77,7 +77,7 @@ function IOSGuide({ t }: { t: ReturnType<typeof useTranslations<'pwa'>> }) {
               </div>
               <div className="flex flex-col items-center gap-1 w-1/4">
                 <div className="w-11 h-11 rounded-xl bg-primary/20 ring-2 ring-primary flex items-center justify-center">
-                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#8b2fc9" strokeWidth="1.8" strokeLinecap="round">
+                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#000000" strokeWidth="1.8" strokeLinecap="round">
                     <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
                   </svg>
                 </div>

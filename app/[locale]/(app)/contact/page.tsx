@@ -27,7 +27,7 @@ export default async function ContactPage({ searchParams }: Props) {
         </header>
         <div className="flex-1 flex flex-col items-center justify-center px-6 text-center gap-4">
           <div className="w-16 h-16 rounded-2xl bg-primary-light flex items-center justify-center">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8b2fc9" strokeWidth="2">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#000000" strokeWidth="2">
               <polyline points="20 6 9 17 4 12" />
             </svg>
           </div>

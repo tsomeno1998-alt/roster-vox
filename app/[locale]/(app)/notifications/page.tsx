@@ -43,7 +43,7 @@ export default async function NotificationsPage() {
       {notifications.length === 0 ? (
         <div className="flex-1 flex flex-col items-center justify-center text-center px-6 py-20">
           <div className="w-16 h-16 rounded-2xl bg-primary-light flex items-center justify-center mb-4">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8b2fc9" strokeWidth="1.5">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#000000" strokeWidth="1.5">
               <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
               <path d="M13.73 21a2 2 0 0 1-3.46 0" />
             </svg>

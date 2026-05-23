@@ -32,7 +32,7 @@ export default async function GuidePage() {
           <div key={key} className="bg-surface rounded-2xl border border-bd p-4">
             <div className="flex items-start gap-3">
               <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-primary-light flex items-center justify-center">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8b2fc9" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d={ICONS[key]} />
                 </svg>
               </div>
