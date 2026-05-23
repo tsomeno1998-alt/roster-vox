@@ -29,12 +29,14 @@ export async function proxy(request: NextRequest) {
   const isAuthRoute =
     rest === '/login' ||
     rest === '/verify-email' ||
+    rest === '/forgot-password' ||
     rest.startsWith('/auth/');
 
   const isPublicRoute =
     rest.startsWith('/posts/') ||
     rest === '/terms' ||
-    rest === '/privacy';
+    rest === '/privacy' ||
+    rest === '/reset-password';
 
   // Auth callbackはi18nリダイレクトをスキップ（ロケールプレフィックスなしで直接処理）
   if (pathname.startsWith('/auth/')) {

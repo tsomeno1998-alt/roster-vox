@@ -90,6 +90,37 @@ export async function signOut() {
   await redirect('/login');
 }
 
+export async function sendPasswordResetEmail(formData: FormData) {
+  const email = formData.get('email') as string;
+  const supabase = await createClient();
+  const callbackUrl = await getCallbackUrl();
+
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: `${callbackUrl}?next=reset-password`,
+  });
+
+  if (error) await redirect('/forgot-password?error=send');
+  nextRedirect(`/forgot-password?sent=${encodeURIComponent(email)}`);
+}
+
+export async function resetPassword(formData: FormData) {
+  const password = formData.get('password') as string;
+  const supabase = await createClient();
+
+  const { error } = await supabase.auth.updateUser({ password });
+  if (error) await redirect('/reset-password?error=reset');
+  await redirect('/timeline');
+}
+
+export async function changePassword(formData: FormData) {
+  const password = formData.get('password') as string;
+  const supabase = await createClient();
+
+  const { error } = await supabase.auth.updateUser({ password });
+  if (error) await redirect('/profile/edit?error=password');
+  await redirect('/profile/edit?success=password');
+}
+
 export async function deleteAccount() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();

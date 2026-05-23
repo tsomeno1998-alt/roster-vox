@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 import { signInWithEmail, signUpWithEmail } from '@/app/actions/auth';
 import Button from '@/components/ui/Button';
 
@@ -54,6 +55,9 @@ export default function EmailAuthForm({ error }: Props) {
           <input type="email" name="email" required autoComplete="email" placeholder={t('emailPlaceholder')} className={inputCls} />
           <input type="password" name="password" required autoComplete="current-password" placeholder={t('passwordPlaceholder')} className={inputCls} />
           <Button type="submit" variant="primary" fullWidth>{t('loginButton')}</Button>
+          <Link href="/forgot-password" className="text-xs text-tx-muted text-center hover:text-primary">
+            {t('forgotLink')}
+          </Link>
         </form>
       ) : (
         <form action={signUpWithEmail} className="flex flex-col gap-3">

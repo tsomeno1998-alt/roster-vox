@@ -136,7 +136,13 @@
     "saving": "保存中...",
     "save": "保存する",
     "guide": "使い方ガイド",
-    "contact": "お問い合わせ"
+    "contact": "お問い合わせ",
+    "changePasswordTitle": "パスワードを変更",
+    "newPassword": "新しいパスワード（6文字以上）",
+    "changePasswordSubmit": "パスワードを変更する",
+    "changePasswordSaving": "変更中...",
+    "changePasswordSuccess": "パスワードを変更しました",
+    "changePasswordError": "パスワードの変更に失敗しました。もう一度お試しください。"
   },
   "auth": {
     "title": "Roster Vox",
@@ -160,7 +166,21 @@
     "verifyTitle": "確認メールを送りました",
     "verifySentTo": "宛に送信しました",
     "verifyInstructions": "届いたメール内の「メールアドレスを確認する」ボタンをクリックするとログインできます。メールが届かない場合は迷惑メールフォルダをご確認ください。",
-    "backToLogin": "← ログイン画面に戻る"
+    "backToLogin": "← ログイン画面に戻る",
+    "forgotLink": "パスワードをお忘れの方",
+    "forgotTitle": "パスワードをリセット",
+    "forgotDescription": "登録したメールアドレスを入力してください。パスワードリセット用のリンクをお送りします。",
+    "forgotSubmit": "リセットリンクを送信",
+    "forgotSubmitting": "送信中...",
+    "forgotSentTitle": "メールを送信しました",
+    "forgotSentDescription": "{email} にパスワードリセット用のリンクを送信しました。メールが届かない場合は迷惑メールフォルダをご確認ください。",
+    "forgotError": "メールの送信に失敗しました。もう一度お試しください。",
+    "resetTitle": "新しいパスワードを設定",
+    "resetDescription": "新しいパスワードを入力してください（6文字以上）。",
+    "resetNewPassword": "新しいパスワード",
+    "resetSubmit": "パスワードを変更する",
+    "resetSubmitting": "変更中...",
+    "resetError": "パスワードの変更に失敗しました。もう一度お試しください。"
   },
   "share": {
     "title": "共有",

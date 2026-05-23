@@ -136,7 +136,13 @@
     "saving": "Saving...",
     "save": "Save",
     "guide": "How to Use",
-    "contact": "Contact"
+    "contact": "Contact",
+    "changePasswordTitle": "Change Password",
+    "newPassword": "New password (6+ characters)",
+    "changePasswordSubmit": "Change password",
+    "changePasswordSaving": "Updating...",
+    "changePasswordSuccess": "Password changed successfully.",
+    "changePasswordError": "Failed to change password. Please try again."
   },
   "auth": {
     "title": "Roster Vox",
@@ -160,7 +166,21 @@
     "verifyTitle": "Check your email",
     "verifySentTo": "We sent a link to",
     "verifyInstructions": "Click the \"Verify email address\" button in the email to log in. If you don't see it, check your spam folder.",
-    "backToLogin": "← Back to login"
+    "backToLogin": "← Back to login",
+    "forgotLink": "Forgot password?",
+    "forgotTitle": "Reset password",
+    "forgotDescription": "Enter your email address and we'll send you a reset link.",
+    "forgotSubmit": "Send reset link",
+    "forgotSubmitting": "Sending...",
+    "forgotSentTitle": "Email sent",
+    "forgotSentDescription": "We sent a password reset link to {email}. If you don't see it, check your spam folder.",
+    "forgotError": "Failed to send email. Please try again.",
+    "resetTitle": "Set new password",
+    "resetDescription": "Enter your new password (6+ characters).",
+    "resetNewPassword": "New password",
+    "resetSubmit": "Change password",
+    "resetSubmitting": "Updating...",
+    "resetError": "Failed to update password. Please try again."
   },
   "share": {
     "title": "Share",

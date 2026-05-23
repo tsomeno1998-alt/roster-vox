@@ -3,13 +3,24 @@ import { redirect } from '@/i18n/navigation';
 import { Link } from '@/i18n/navigation';
 import { getCurrentUser, getCurrentProfile } from '@/lib/queries/profiles';
 import { updateProfile } from '@/app/actions/profile';
+import { changePassword } from '@/app/actions/auth';
 import SubmitButton from '@/components/ui/SubmitButton';
 import AvatarUpload from '@/components/profile/AvatarUpload';
 
-export default async function EditProfilePage() {
-  const [user, profile] = await Promise.all([getCurrentUser(), getCurrentProfile()]);
+interface Props {
+  searchParams: Promise<{ success?: string; error?: string }>;
+}
+
+export default async function EditProfilePage({ searchParams }: Props) {
+  const [user, profile, { success, error: errorParam }] = await Promise.all([
+    getCurrentUser(),
+    getCurrentProfile(),
+    searchParams,
+  ]);
   if (!user || !profile) return await redirect('/login');
   const t = await getTranslations('profile');
+
+  const isEmailUser = user.identities?.some((id) => id.provider === 'email') ?? false;
 
   return (
     <div className="flex flex-col min-h-full">
@@ -70,6 +81,40 @@ export default async function EditProfilePage() {
 
         <SubmitButton fullWidth size="lg" pendingLabel={t('saving')}>{t('save')}</SubmitButton>
       </form>
+
+      {isEmailUser && (
+        <div className="px-4 pb-8">
+          <div className="border-t border-bd pt-6">
+            <h2 className="text-sm font-semibold text-tx mb-4">{t('changePasswordTitle')}</h2>
+
+            {success === 'password' && (
+              <p className="mb-3 px-3 py-2 rounded-xl bg-green-50 border border-green-200 text-xs text-green-700 text-center">
+                {t('changePasswordSuccess')}
+              </p>
+            )}
+            {errorParam === 'password' && (
+              <p className="mb-3 px-3 py-2 rounded-xl bg-red-50 border border-red-200 text-xs text-red-600 text-center">
+                {t('changePasswordError')}
+              </p>
+            )}
+
+            <form action={changePassword} className="flex flex-col gap-3">
+              <input
+                type="password"
+                name="password"
+                required
+                minLength={6}
+                autoComplete="new-password"
+                placeholder={t('newPassword')}
+                className="w-full px-3 py-2.5 rounded-xl border border-bd bg-surface text-sm text-tx focus:outline-none focus:border-primary"
+              />
+              <SubmitButton fullWidth pendingLabel={t('changePasswordSaving')}>
+                {t('changePasswordSubmit')}
+              </SubmitButton>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
