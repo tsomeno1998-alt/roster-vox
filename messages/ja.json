@@ -80,7 +80,9 @@
     "recordNone": "未記録",
     "editRecord": "戦績を編集",
     "saveRecord": "保存する",
-    "savingRecord": "保存中..."
+    "savingRecord": "保存中...",
+    "signupBanner": "あなたのロスターも共有しよう",
+    "signupBannerCta": "新規登録"
   },
   "postCard": {
     "record": "{w}勝 {l}敗 {d}分"

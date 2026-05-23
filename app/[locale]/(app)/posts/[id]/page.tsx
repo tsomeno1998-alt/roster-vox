@@ -244,7 +244,25 @@ export default async function PostDetailPage({ params }: Props) {
           )}
           {currentProfile && <UsedReportForm postId={id} factions={factions} />}
         </div>
+
+        {!user && <div className="h-16" />}
       </div>
+
+      {!user && (
+        <div className="fixed bottom-16 left-0 right-0 z-[55] max-w-lg mx-auto px-3 pb-2">
+          <div className="bg-surface border border-bd rounded-2xl shadow-lg px-4 py-3 flex items-center gap-3">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo.svg" alt="" className="w-7 h-7 shrink-0" />
+            <p className="flex-1 text-xs text-tx">{t('signupBanner')}</p>
+            <Link
+              href="/login"
+              className="shrink-0 text-xs font-semibold text-white bg-primary px-3 py-1.5 rounded-full whitespace-nowrap"
+            >
+              {t('signupBannerCta')} →
+            </Link>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -80,7 +80,9 @@
     "recordNone": "No record yet",
     "editRecord": "Edit Record",
     "saveRecord": "Save",
-    "savingRecord": "Saving..."
+    "savingRecord": "Saving...",
+    "signupBanner": "Share your roster with the community",
+    "signupBannerCta": "Sign up"
   },
   "postCard": {
     "record": "{w}W {l}L {d}D"
