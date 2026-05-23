@@ -3,7 +3,7 @@ import { redirect } from '@/i18n/navigation';
 import { Link } from '@/i18n/navigation';
 import { getCurrentUser, getNotifications, type NotificationWithActor } from '@/lib/queries/profiles';
 import { createAdminClient } from '@/lib/supabase/admin';
-import { revalidatePath } from 'next/cache';
+
 import Avatar from '@/components/ui/Avatar';
 import { timeAgo } from '@/lib/timeAgo';
 
@@ -25,7 +25,6 @@ export default async function NotificationsPage() {
       .update({ read: true })
       .eq('user_id', user.id)
       .eq('read', false);
-    revalidatePath('/[locale]/(app)', 'layout');
   }
 
   const typeKey = {
