@@ -19,6 +19,13 @@ export default function RosterText({ text }: { text: string }) {
   const t = useTranslations('post');
   const [expanded, setExpanded] = useState(false);
   const [unitsOnly, setUnitsOnly] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  async function copyRoster() {
+    await navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }
 
   const filteredText = unitsOnly ? extractUnits(text) : text;
   const lines = filteredText.split('\n');
@@ -31,7 +38,15 @@ export default function RosterText({ text }: { text: string }) {
   return (
     <div>
       <div className="flex items-center justify-between mb-2">
-        <h3 className="font-semibold text-tx">{t('roster')}</h3>
+        <div className="flex items-center gap-2">
+          <h3 className="font-semibold text-tx">{t('roster')}</h3>
+          <button
+            onClick={copyRoster}
+            className="text-xs text-tx-muted hover:text-tx transition-colors"
+          >
+            {copied ? t('copyRosterDone') : t('copyRoster')}
+          </button>
+        </div>
         <label className="flex items-center gap-2 cursor-pointer select-none">
           <span className="text-xs text-tx-muted">{t('unitsOnly')}</span>
           <button

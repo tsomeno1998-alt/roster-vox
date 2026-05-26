@@ -82,7 +82,9 @@
     "saveRecord": "保存する",
     "savingRecord": "保存中...",
     "signupBanner": "あなたのロスターも共有しよう",
-    "signupBannerCta": "新規登録"
+    "signupBannerCta": "新規登録",
+    "copyRoster": "コピー",
+    "copyRosterDone": "コピーしました！"
   },
   "postCard": {
     "record": "{w}勝 {l}敗 {d}分"

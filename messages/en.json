@@ -82,7 +82,9 @@
     "saveRecord": "Save",
     "savingRecord": "Saving...",
     "signupBanner": "Share your roster with the community",
-    "signupBannerCta": "Sign up"
+    "signupBannerCta": "Sign up",
+    "copyRoster": "Copy",
+    "copyRosterDone": "Copied!"
   },
   "postCard": {
     "record": "{w}W {l}L {d}D"
