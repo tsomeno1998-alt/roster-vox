@@ -48,8 +48,7 @@ export default function PromoCarousel() {
             <img
               src={img}
               alt=""
-              className="w-full rounded-2xl shadow-lg object-cover object-top"
-              style={{ height: '320px' }}
+              className="w-full rounded-2xl shadow-sm"
             />
             <p className="text-xs text-tx-muted text-center mt-3 leading-relaxed">
               {t(captionKey)}
