@@ -22,7 +22,10 @@
     "emptyHint": "Be the first to post!",
     "emptyFollowing": "No posts from people you follow",
     "emptyFollowingHint": "Follow users to see their rosters here",
-    "allLoaded": "No more posts"
+    "allLoaded": "No more posts",
+    "filterFavorites": "⭐️ Favorites",
+    "emptyFavorites": "No favorites yet",
+    "emptyFavoritesHint": "Tap ⭐️ on a post to save it"
   },
   "post": {
     "newTitle": "Post Roster",
@@ -104,6 +107,7 @@
     "period90d": "3 months",
     "searchButton": "Search",
     "filterFollowing": "Following only",
+    "filterFavorites": "Favorites only",
     "usersTitle": "Users"
   },
   "notifications": {

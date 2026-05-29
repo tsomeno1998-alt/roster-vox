@@ -89,6 +89,20 @@ export interface PostRow {
   qa_fight_on_death: boolean | null;
 }
 
+export async function getUserFavoritedPostIds(userId: string, postIds: string[]) {
+  if (postIds.length === 0) return new Set<string>();
+
+  const supabase = await createClient();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data } = await (supabase as any)
+    .from('favorites')
+    .select('post_id')
+    .eq('user_id', userId)
+    .in('post_id', postIds);
+
+  return new Set(((data ?? []) as { post_id: string }[]).map((f) => f.post_id));
+}
+
 export async function getPosts({
   factionId,
   points,
@@ -97,6 +111,7 @@ export async function getPosts({
   offset = 0,
   userId,
   followingOnly = false,
+  favoritesOnly = false,
   group,
 }: {
   factionId?: string;
@@ -106,6 +121,7 @@ export async function getPosts({
   offset?: number;
   userId?: string;
   followingOnly?: boolean;
+  favoritesOnly?: boolean;
   group?: string;
 } = {}): Promise<PostRow[]> {
   const supabase = await createClient();
@@ -117,6 +133,38 @@ export async function getPosts({
     const { data: gf } = await (supabase as any).from('factions').select('id').eq('group', group);
     groupFactionIds = (gf ?? []).map((f: { id: string }) => f.id);
     if (groupFactionIds!.length === 0) return [];
+  }
+
+  if (favoritesOnly && userId) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: favs } = await (supabase as any)
+      .from('favorites')
+      .select('post_id')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false });
+    const favIds: string[] = (favs ?? []).map((f: { post_id: string }) => f.post_id);
+    if (favIds.length === 0) return [];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let query = (supabase as any).from('posts').select(`
+      *,
+      profiles(id, username, display_name, avatar_url),
+      factions(id, name, group),
+      likes(count),
+      comments(count)
+    `).in('id', favIds);
+    if (factionId) query = query.eq('faction_id', factionId);
+    if (groupFactionIds) query = query.in('faction_id', groupFactionIds);
+    if (points) query = query.eq('points', points);
+    query = query.order('created_at', { ascending: false }).range(offset, offset + limit - 1);
+    const { data, error } = await query;
+    if (error) { console.error('getPosts(favorites):', error); return []; }
+    const rows = (data as RawPost[]).map((p): PostRow => ({
+      ...p,
+      likes_count: extractCount(p.likes),
+      comments_count: extractCount(p.comments),
+    }));
+    if (sort === 'popular') rows.sort((a, b) => b.likes_count - a.likes_count);
+    return rows;
   }
 
   if (followingOnly && userId) {
@@ -277,6 +325,7 @@ export async function searchPosts({
   points,
   cutoff,
   followingOnly = false,
+  favoritesOnly = false,
   userId,
 }: {
   keyword?: string;
@@ -284,6 +333,7 @@ export async function searchPosts({
   points?: number;
   cutoff?: string;
   followingOnly?: boolean;
+  favoritesOnly?: boolean;
   userId?: string;
 }): Promise<PostRow[]> {
   const supabase = await createClient();
@@ -297,6 +347,17 @@ export async function searchPosts({
       .eq('follower_id', userId);
     followingIds = (follows ?? []).map((f: { following_id: string }) => f.following_id);
     if ((followingIds as string[]).length === 0) return [];
+  }
+
+  let favoriteIds: string[] | null = null;
+  if (favoritesOnly && userId) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: favs } = await (supabase as any)
+      .from('favorites')
+      .select('post_id')
+      .eq('user_id', userId);
+    favoriteIds = (favs ?? []).map((f: { post_id: string }) => f.post_id);
+    if ((favoriteIds as string[]).length === 0) return [];
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -317,6 +378,7 @@ export async function searchPosts({
   if (points) query = query.eq('points', points);
   if (cutoff) query = query.gte('created_at', cutoff);
   if (followingIds) query = query.in('user_id', followingIds);
+  if (favoriteIds) query = query.in('id', favoriteIds);
 
   const { data } = await query;
 

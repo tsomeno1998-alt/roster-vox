@@ -8,14 +8,15 @@ import Avatar from '@/components/ui/Avatar';
 import SearchForm from '@/components/search/SearchForm';
 
 interface Props {
-  searchParams: Promise<{ q?: string; faction?: string; points?: string; period?: string; following?: string; winRate?: string }>;
+  searchParams: Promise<{ q?: string; faction?: string; points?: string; period?: string; following?: string; winRate?: string; favorites?: string }>;
 }
 
 export default async function SearchPage({ searchParams }: Props) {
-  const { q, faction, points, period, following, winRate } = await searchParams;
+  const { q, faction, points, period, following, winRate, favorites } = await searchParams;
 
   const followingOnly = following === '1';
-  const hasFilter = !!(q || faction || points || period || followingOnly || winRate);
+  const favoritesOnly = favorites === '1';
+  const hasFilter = !!(q || faction || points || period || followingOnly || winRate || favoritesOnly);
 
   const periodDays: Record<string, number> = { '7d': 7, '30d': 30, '90d': 90 };
   const cutoff = period && periodDays[period]
@@ -37,6 +38,7 @@ export default async function SearchPage({ searchParams }: Props) {
           points: points ? parseInt(points) : undefined,
           cutoff,
           followingOnly,
+          favoritesOnly,
           userId: currentUser?.id,
         })
       : Promise.resolve([]),

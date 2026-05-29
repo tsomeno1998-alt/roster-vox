@@ -1,6 +1,7 @@
 import { Link } from '@/i18n/navigation';
 import Avatar from '@/components/ui/Avatar';
 import FactionBadge from '@/components/post/FactionBadge';
+import FavoriteButton from '@/components/post/FavoriteButton';
 import { timeAgo } from '@/lib/timeAgo';
 import type { Post } from '@/lib/types';
 
@@ -10,9 +11,11 @@ interface PostCardProps {
     factions: NonNullable<Post['factions']>;
   };
   locale: string;
+  isFavorited?: boolean;
+  isLoggedIn?: boolean;
 }
 
-export default function PostCard({ post, locale }: PostCardProps) {
+export default function PostCard({ post, locale, isFavorited = false, isLoggedIn = false }: PostCardProps) {
   const { profiles: author, factions: faction } = post;
   const total = post.win + post.loss + post.draw;
   const winRate = total > 0 ? Math.round((post.win / total) * 100) : null;
@@ -58,6 +61,12 @@ export default function PostCard({ post, locale }: PostCardProps) {
               <ChatIcon />
               {post.comments_count ?? 0}
             </span>
+            <FavoriteButton
+              postId={post.id}
+              initialFavorited={isFavorited}
+              isLoggedIn={isLoggedIn}
+              size="sm"
+            />
           </div>
         </div>
       </article>

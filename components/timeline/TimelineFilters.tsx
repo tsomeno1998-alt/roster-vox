@@ -35,6 +35,7 @@ export default function TimelineFilters({ factions, isLoggedIn = false }: Timeli
   const currentFaction = searchParams.get('faction') ?? '';
   const currentPoints = searchParams.get('points') ?? '';
   const currentFeed = searchParams.get('feed') ?? '';
+  const currentFavorites = searchParams.get('feed') === 'favorites';
 
   const selectedFactionGroup = currentFaction
     ? (factions.find((f) => f.id === currentFaction)?.group as FactionGroup | undefined)
@@ -98,6 +99,18 @@ export default function TimelineFilters({ factions, isLoggedIn = false }: Timeli
               }`}
             >
               {t('filterFollowing')}
+            </button>
+          )}
+          {isLoggedIn && (
+            <button
+              onClick={() => update({ feed: currentFavorites ? '' : 'favorites' })}
+              className={`text-xs px-3 py-1.5 rounded-full font-medium transition-colors ${
+                currentFavorites
+                  ? 'bg-primary text-white'
+                  : 'bg-surface border border-bd text-tx-muted hover:border-primary hover:text-primary'
+              }`}
+            >
+              {t('filterFavorites')}
             </button>
           )}
         </div>

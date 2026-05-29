@@ -22,7 +22,10 @@
     "emptyHint": "最初の投稿者になりましょう！",
     "emptyFollowing": "フォロー中のユーザーの投稿はありません",
     "emptyFollowingHint": "ユーザーをフォローすると投稿がここに表示されます",
-    "allLoaded": "すべて表示しました"
+    "allLoaded": "すべて表示しました",
+    "filterFavorites": "⭐️ お気に入り",
+    "emptyFavorites": "お気に入りがありません",
+    "emptyFavoritesHint": "投稿の⭐️をタップして保存しましょう"
   },
   "post": {
     "newTitle": "ロスターを投稿",
@@ -104,6 +107,7 @@
     "period90d": "3ヶ月",
     "searchButton": "検索する",
     "filterFollowing": "フォロー中のみ",
+    "filterFavorites": "お気に入りのみ",
     "usersTitle": "ユーザー"
   },
   "notifications": {

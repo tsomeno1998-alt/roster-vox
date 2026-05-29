@@ -22,6 +22,7 @@ export default function SearchForm({ factions, isLoggedIn = false }: SearchFormP
   const currentPeriod = searchParams.get('period') ?? '';
   const currentWinRate = searchParams.get('winRate') ?? '';
   const currentFollowing = searchParams.get('following') === '1';
+  const currentFavorites = searchParams.get('favorites') === '1';
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -32,11 +33,13 @@ export default function SearchForm({ factions, isLoggedIn = false }: SearchFormP
     const points = data.get('points') as string;
     const period = data.get('period') as string;
     const following = data.get('following') as string;
+    const favorites = data.get('favorites') as string;
     if (q) params.set('q', q);
     if (faction) params.set('faction', faction);
     if (points) params.set('points', points);
     if (period) params.set('period', period);
     if (following) params.set('following', '1');
+    if (favorites) params.set('favorites', '1');
     const winRate = data.get('winRate') as string;
     if (winRate) params.set('winRate', winRate);
     router.push(`${pathname}?${params.toString()}`);
@@ -100,16 +103,28 @@ export default function SearchForm({ factions, isLoggedIn = false }: SearchFormP
       </div>
 
       {isLoggedIn && (
-        <label className="flex items-center gap-2 cursor-pointer w-fit">
-          <input
-            type="checkbox"
-            name="following"
-            value="1"
-            defaultChecked={currentFollowing}
-            className="w-4 h-4 accent-primary"
-          />
-          <span className="text-xs text-tx-muted">{t('filterFollowing')}</span>
-        </label>
+        <div className="flex gap-4">
+          <label className="flex items-center gap-2 cursor-pointer w-fit">
+            <input
+              type="checkbox"
+              name="following"
+              value="1"
+              defaultChecked={currentFollowing}
+              className="w-4 h-4 accent-primary"
+            />
+            <span className="text-xs text-tx-muted">{t('filterFollowing')}</span>
+          </label>
+          <label className="flex items-center gap-2 cursor-pointer w-fit">
+            <input
+              type="checkbox"
+              name="favorites"
+              value="1"
+              defaultChecked={currentFavorites}
+              className="w-4 h-4 accent-primary"
+            />
+            <span className="text-xs text-tx-muted">{t('filterFavorites')}</span>
+          </label>
+        </div>
       )}
 
       <button

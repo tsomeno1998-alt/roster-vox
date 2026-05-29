@@ -9,6 +9,7 @@ import { createClient } from '@/lib/supabase/server';
 import Avatar from '@/components/ui/Avatar';
 import FactionBadge from '@/components/post/FactionBadge';
 import LikeButton from '@/components/post/LikeButton';
+import FavoriteButton from '@/components/post/FavoriteButton';
 import FollowButton from '@/components/profile/FollowButton';
 import RecordEditModal from '@/components/post/RecordEditModal';
 import ShareSheet from '@/components/post/ShareSheet';
@@ -56,13 +57,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 async function getLikeAndProfile(postId: string, userId: string) {
   const supabase = await createClient();
-  const [likeRes, profileRes] = await Promise.all([
+  const [likeRes, favRes, profileRes] = await Promise.all([
     supabase.from('likes').select('id').eq('post_id', postId).eq('user_id', userId).maybeSingle(),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (supabase as any).from('favorites').select('id').eq('post_id', postId).eq('user_id', userId).maybeSingle(),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (supabase as any).from('profiles').select('avatar_url, username').eq('id', userId).single(),
   ]);
   return {
     isLiked: !!likeRes.data,
+    isFavorited: !!favRes.data,
     currentProfile: profileRes.data as { avatar_url: string | null; username: string } | null,
   };
 }
@@ -79,12 +83,12 @@ export default async function PostDetailPage({ params }: Props) {
     getTranslations('post'),
     getTranslations('result'),
     getLocale(),
-    user ? getLikeAndProfile(id, user.id) : Promise.resolve({ isLiked: false, currentProfile: null }),
+    user ? getLikeAndProfile(id, user.id) : Promise.resolve({ isLiked: false, isFavorited: false, currentProfile: null }),
   ]);
 
   if (!post) notFound();
 
-  const { isLiked, currentProfile } = userExtras;
+  const { isLiked, isFavorited, currentProfile } = userExtras;
   const isOwner = user?.id === post.user_id;
   const profile = post.profiles as { id: string; username: string; display_name: string; avatar_url: string | null };
   const faction = post.factions as { id: string; name: string; group: string };
@@ -174,6 +178,7 @@ export default async function PostDetailPage({ params }: Props) {
 
         <div className="flex gap-3 py-3 border-y border-bd">
           <LikeButton postId={id} initialCount={post.likes_count ?? 0} initialLiked={isLiked} isLoggedIn={!!user} />
+          <FavoriteButton postId={id} initialFavorited={isFavorited} isLoggedIn={!!user} />
           <button className="flex-1 flex flex-col items-center gap-1 text-xs text-tx-muted">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
