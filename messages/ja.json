@@ -87,7 +87,8 @@
     "signupBanner": "あなたのロスターも共有しよう",
     "signupBannerCta": "新規登録",
     "copyRoster": "コピー",
-    "copyRosterDone": "コピーしました！"
+    "copyRosterDone": "コピーしました！",
+    "favorite": "お気に入り"
   },
   "postCard": {
     "record": "{w}勝 {l}敗 {d}分"

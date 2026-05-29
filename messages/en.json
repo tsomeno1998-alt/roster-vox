@@ -87,7 +87,8 @@
     "signupBanner": "Share your roster with the community",
     "signupBannerCta": "Sign up",
     "copyRoster": "Copy",
-    "copyRosterDone": "Copied!"
+    "copyRosterDone": "Copied!",
+    "favorite": "Favorite"
   },
   "postCard": {
     "record": "{w}W {l}L {d}D"
