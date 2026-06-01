@@ -4,14 +4,15 @@ import { Link } from '@/i18n/navigation';
 const JA = {
   title: 'プライバシーポリシー',
   back: '← ログインに戻る',
-  effective: '制定日：2026年5月20日',
+  effective: '最終更新日：2026年5月29日',
   sections: [
     {
       heading: '1. 収集する情報',
       items: [
-        'アカウント情報：メールアドレス、表示名（Google / Discord ログインの場合はプロフィール情報）',
+        'アカウント情報：メールアドレス、表示名（Google / Discord / Apple ログインの場合はプロフィール情報）',
         '投稿データ：ロスターテキスト、タイトル、コメント、写真',
-        '利用データ：いいね、フォロー関係、通知',
+        '利用データ：いいね、お気に入り登録、フォロー関係、通報履歴',
+        'デバイス情報：プッシュ通知の配信に使用するデバイストークン',
       ],
     },
     {
@@ -23,12 +24,13 @@ const JA = {
       items: [
         'Supabase（データベース・認証）',
         'Vercel（ホスティング）',
-        'Google / Discord（OAuth ログイン）',
+        'Google / Discord / Apple（OAuth ログイン）',
+        'Expo（プッシュ通知の配信）',
       ],
     },
     {
       heading: '4. データの保管',
-      body: 'データは日本国内の Supabase サーバーに保管されます。',
+      body: 'データは Supabase のサーバーに保管されます。',
     },
     {
       heading: '5. EUユーザーの権利（GDPR）',
@@ -42,7 +44,7 @@ const JA = {
     },
     {
       heading: '6. データの削除',
-      body: 'アカウント削除により、投稿・コメント・いいねを含むすべてのデータが完全に削除されます。',
+      body: 'アカウント削除により、投稿・コメント・いいね・お気に入りを含むすべてのデータが完全に削除されます。',
     },
     {
       heading: '7. お問い合わせ',
@@ -54,14 +56,15 @@ const JA = {
 const EN = {
   title: 'Privacy Policy',
   back: '← Back to Login',
-  effective: 'Effective Date: May 20, 2026',
+  effective: 'Last updated: May 29, 2026',
   sections: [
     {
       heading: '1. Information We Collect',
       items: [
-        'Account information: email address and display name (or profile data from Google / Discord OAuth)',
+        'Account information: email address and display name (or profile data from Google / Discord / Apple OAuth)',
         'Post data: roster text, titles, comments, and photos',
-        'Activity data: likes, follows, and notifications',
+        'Activity data: likes, favorites, follows, and content reports',
+        'Device information: push notification tokens used to deliver notifications to your device',
       ],
     },
     {
@@ -73,12 +76,13 @@ const EN = {
       items: [
         'Supabase (database and authentication)',
         'Vercel (hosting)',
-        'Google / Discord (OAuth login)',
+        'Google / Discord / Apple (OAuth login)',
+        'Expo (push notification delivery)',
       ],
     },
     {
       heading: '4. Data Storage',
-      body: 'Your data is stored on Supabase servers located in Japan.',
+      body: 'Your data is stored on Supabase servers.',
     },
     {
       heading: '5. Your Rights (GDPR)',
@@ -92,7 +96,7 @@ const EN = {
     },
     {
       heading: '6. Account Deletion',
-      body: 'When you delete your account, all associated data — including posts, comments, and likes — is permanently removed.',
+      body: 'When you delete your account, all associated data — including posts, comments, likes, and favorites — is permanently removed.',
     },
     {
       heading: '7. Contact',
