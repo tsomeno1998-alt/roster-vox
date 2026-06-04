@@ -36,7 +36,8 @@ export async function proxy(request: NextRequest) {
     rest.startsWith('/posts/') ||
     rest === '/terms' ||
     rest === '/privacy' ||
-    rest === '/reset-password';
+    rest === '/reset-password' ||
+    rest === '/delete-account';
 
   // Auth callbackはi18nリダイレクトをスキップ（ロケールプレフィックスなしで直接処理）
   if (pathname.startsWith('/auth/')) {
